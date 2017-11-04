@@ -1,0 +1,278 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.v7.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/card_movieDetails"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:layout_margin="@dimen/margin_10"
+    android:elevation="@dimen/elevation_10"
+    app:cardCornerRadius="20dp"
+    tools:context="com.example.harshit.tvdb.Activities.MovieDetailActivity">
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+
+            <FrameLayout
+                android:id="@+id/fl_container"
+                android:layout_centerInParent="true"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"/>
+
+
+
+
+            <RelativeLayout
+                android:id="@+id/rl_movieImages"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/height_150">
+
+                <android.support.v4.view.ViewPager
+                    android:id="@+id/vp_slider"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent" />
+
+                <LinearLayout
+                    android:id="@+id/ll_dots"
+                    android:layout_width="match_parent"
+                    android:layout_height="30dp"
+                    android:layout_alignParentBottom="true"
+                    android:layout_marginBottom="20dp"
+                    android:gravity="center"
+                    android:orientation="horizontal" />
+
+            </RelativeLayout>
+
+            <LinearLayout
+                android:id="@+id/ll_moviename"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/height_50"
+                android:layout_below="@+id/rl_movieImages"
+                android:layout_marginTop="@dimen/margin_3"
+                android:orientation="horizontal"
+                android:weightSum="1">
+
+
+                <ImageView
+                    android:id="@+id/img_posterimage"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight=".2" />
+
+                <TextView
+                    android:id="@+id/tv_movietitle"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight=".8"
+                    android:gravity="center"
+                    android:padding="@dimen/padding_10"
+                    android:text=""
+                    android:textSize="@dimen/text_18"
+                    android:textStyle="bold|italic" />
+            </LinearLayout>
+
+
+            <TextView
+                android:id="@+id/tv_movieDesc"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/ll_moviename"
+                android:textSize="@dimen/text_14"
+                android:textStyle="italic" />
+
+
+            <TableLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/tv_movieDesc">
+
+                <TableRow
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:padding="@dimen/padding_10">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="2"
+                        android:gravity="center"
+                        android:text="popularity" />
+
+                    <TextView
+                        android:id="@+id/tv_moviepopularity"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="2"
+                        android:gravity="center"
+                       />
+
+
+                </TableRow>
+
+                <TableRow
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:padding="@dimen/padding_10">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="2"
+                        android:gravity="center"
+                        android:text="release date" />
+
+                    <TextView
+                        android:id="@+id/tv_moviereleasedate"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="2"
+                        android:gravity="center"
+                        />
+
+
+                </TableRow>
+
+                <TableRow
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:padding="@dimen/padding_10">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="2"
+                        android:gravity="center"
+                        android:text="status" />
+
+                    <TextView
+                        android:id="@+id/tv_moviestatus"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="2"
+                        android:gravity="center"
+                         />
+
+
+                </TableRow>
+
+                <TableRow
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:padding="@dimen/padding_10">
+
+                    <TextView
+                        android:id="@+id/textView2"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="2"
+                        android:gravity="center"
+                        android:text="Budget" />
+
+                    <TextView
+                        android:id="@+id/tv_moviebudget"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="2"
+                        android:gravity="center"
+                        />
+
+
+                </TableRow>
+
+                <TableRow
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:padding="@dimen/padding_10">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="2"
+                        android:gravity="center"
+                        android:text="Revenue" />
+
+                    <TextView
+                        android:id="@+id/tv_movierevenue"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="2"
+                        android:gravity="center"
+                        />
+
+
+                </TableRow>
+
+
+                <TableRow
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:padding="@dimen/padding_10">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="2"
+                        android:gravity="center"
+                        android:text="Runtime" />
+
+                    <TextView
+                        android:id="@+id/tv_movieruntime"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="2"
+                        android:gravity="center"
+                        />
+
+
+                </TableRow>
+
+
+                <TextView
+                    android:id="@+id/tv_movieVideos"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="2"
+                    android:drawableEnd="@drawable/ic_menu_manage"
+                    android:drawableRight="@drawable/ic_menu_manage"
+                    android:gravity="center"
+                    android:layout_margin="@dimen/margin_5"
+
+                    android:text="get youtube videos" />
+
+                <TextView
+                    android:id="@+id/tv_recommendedmovies"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="2"
+                    android:drawableEnd="@drawable/ic_menu_manage"
+                    android:drawableRight="@drawable/ic_menu_manage"
+                    android:gravity="center"
+                    android:layout_margin="@dimen/margin_5"
+                    android:text="get recommended movies " />
+
+                <TextView
+                    android:id="@+id/tv_moviecrew"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="2"
+                    android:drawableEnd="@drawable/ic_menu_manage"
+                    android:drawableRight="@drawable/ic_menu_manage"
+                    android:gravity="center"
+                    android:layout_margin="@dimen/margin_5"
+                    android:text="get cast n crew" />
+
+
+            </TableLayout>
+
+
+        </RelativeLayout>
+
+
+    </ScrollView>
+</android.support.v7.widget.CardView>

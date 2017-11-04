@@ -1,0 +1,25 @@
+<resources>
+    <string name="app_name">TVDB</string>
+    <string name="title_activity_dash_board">DashBoardActivity</string>
+
+    <string name="navigation_drawer_open">Open navigation drawer</string>
+    <string name="navigation_drawer_close">Close navigation drawer</string>
+
+    <string name="action_settings">Settings</string>
+
+    <string name="title_activity_non_internet">NonInternetActivity</string>
+    <string name="dummy_button">Dummy Button</string>
+    <string name="dummy_content">DUMMY\nCONTENT</string>
+    <string name="no_internet">NO INTERNET</string>
+    <string name="something_went_wrong">OOPS! Something went wrong</string>
+    <string name="movie_click">Movie_Click</string>
+    <string name="genre_click">Genre_Click</string>
+    <string name="tv_click">tv_click</string>
+    <string name="airing_today">airing_today</string>
+    <string name="top_rated">top_rated</string>
+    <string name="popular">popular</string>
+    <string name="on_the_air">on_the_air</string>
+
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+</resources>

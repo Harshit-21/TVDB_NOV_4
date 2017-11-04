@@ -1,0 +1,99 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.v7.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/card_Detail"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_margin="@dimen/margin_10"
+    app:cardElevation="@dimen/elevation_10"
+    app:cardCornerRadius="10dp"
+    android:backgroundTint="@color/colorlightskin"
+    android:padding="@dimen/padding_20"
+    >
+
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+       >
+
+
+            <RelativeLayout
+                android:id="@+id/rl_cast"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <ImageView
+                    android:id="@+id/img_title"
+                    android:layout_width="80dp"
+                    android:layout_height="80dp"
+                    android:layout_alignParentLeft="true"
+                    android:layout_marginLeft="@dimen/margin_3"
+                    />
+
+                <TextView
+                    android:id="@+id/tv_castorcrewName"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_toRightOf="@+id/img_title"
+                    android:textColor="@color/black"
+                    android:textSize="@dimen/text_20"
+                    android:textStyle="bold" />
+
+
+                <TextView
+                    android:id="@+id/tv_chracter"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/tv_castorcrewName"
+                    android:layout_toRightOf="@+id/img_title"
+                    android:maxLines="2"
+                    android:ellipsize="end"
+                    android:textColor="@color/black"
+                    android:textStyle="italic" />
+
+
+            </RelativeLayout>
+
+        <LinearLayout
+            android:id="@+id/ll_bottom"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/height_50"
+            android:layout_below="@+id/rl_cast"
+            android:background="#5a9387"
+            android:orientation="horizontal"
+           >
+
+            <TextView
+                android:id="@+id/tv_gender"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:textColor="@color/white"
+                android:textStyle="bold|italic" />
+
+            <TextView
+                android:id="@+id/tv_job"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:textColor="@color/white"
+                android:textStyle="bold|italic" />
+
+            <TextView
+                android:id="@+id/tv_department"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:textColor="@color/white"
+                android:textStyle="bold|italic" />
+
+
+        </LinearLayout>
+    </RelativeLayout>
+
+
+</android.support.v7.widget.CardView>

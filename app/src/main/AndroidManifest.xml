@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    package="com.example.harshit.tvdb">
+
+    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+
+    <application
+        android:name=".Application.MyApplication"
+        android:allowBackup="true"
+        android:icon="@mipmap/ic_launcher"
+        android:label="@string/app_name"
+        android:roundIcon="@mipmap/ic_launcher_round"
+        android:supportsRtl="true"
+        android:theme="@style/AppTheme">
+        <activity
+            android:name=".Activities.DashBoardActivity"
+            android:label="@string/title_activity_dash_board"
+            android:theme="@style/AppTheme.NoActionBar">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+        <activity android:name=".Activities.MoviesListActivity" />
+        <activity
+            android:name=".Activities.NonInternetorErrorActivity"
+            android:configChanges="orientation|keyboardHidden|screenSize"
+            android:label="@string/title_activity_non_internet"
+            android:theme="@style/FullscreenTheme" />
+        <activity android:name=".Activities.MovieDetailActivity" />
+        <activity android:name=".Activities.TvActivity" />
+        <activity android:name=".Activities.TvDetailActivity" />
+        <activity android:name=".Activities.RecommendedMoviesActivity" />
+        <activity android:name=".Activities.CrewActivity"></activity>
+    </application>
+
+</manifest>

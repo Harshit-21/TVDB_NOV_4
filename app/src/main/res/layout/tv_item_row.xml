@@ -1,0 +1,112 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.v7.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/card_Detail"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_margin="@dimen/margin_10"
+    app:cardElevation="@dimen/elevation_10"
+    app:cardCornerRadius="10dp"
+    android:padding="@dimen/padding_20"
+    >
+
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@drawable/round_corner">
+
+        <ImageView
+            android:id="@+id/img_cover"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/height_100"
+            android:scaleType="fitXY"
+            android:alpha=".4"
+            />
+
+        <FrameLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_above="@+id/ll_bottom">
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <ImageView
+                    android:id="@+id/img_title"
+                    android:layout_width="80dp"
+                    android:layout_height="80dp"
+                    android:layout_alignParentLeft="true"
+                    android:layout_marginLeft="@dimen/margin_3"
+                    />
+
+                <TextView
+                    android:id="@+id/tv_Name"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_toRightOf="@+id/img_title"
+                    android:textColor="@color/black"
+                    android:textSize="@dimen/text_20"
+                    android:text="fhdfjhdfhjdfhjdhdhj"
+                    android:textStyle="bold" />
+
+
+                <TextView
+                    android:id="@+id/tv_shortDesc"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/tv_Name"
+                    android:layout_toRightOf="@+id/img_title"
+                    android:maxLines="2"
+                    android:ellipsize="end"
+                    android:text="thid hfdfdhdfhdf fhdfhfdjdf dfhdfhfdhfdhdfhdfhdfdfj hfdhdfhdfhdfhdf hfdhfdhdf fddfhdfh"
+                    android:textColor="@color/black"
+                    android:textStyle="italic" />
+
+
+            </RelativeLayout>
+        </FrameLayout>
+
+        <LinearLayout
+            android:id="@+id/ll_bottom"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/height_50"
+            android:layout_below="@+id/img_cover"
+            android:background="#5a9387"
+            android:orientation="horizontal"
+            android:weightSum="1">
+
+            <TextView
+                android:id="@+id/tv_releasedate"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight=".33"
+                android:gravity="center"
+                android:textColor="@color/white"
+                android:textStyle="bold|italic" />
+
+            <TextView
+                android:id="@+id/tv_vote_average"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight=".33"
+                android:gravity="center"
+                android:textColor="@color/white"
+                android:textStyle="bold|italic" />
+
+            <TextView
+                android:id="@+id/tv_popularity"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight=".33"
+                android:gravity="center"
+                android:textColor="@color/white"
+                android:textStyle="bold|italic" />
+
+
+        </LinearLayout>
+    </RelativeLayout>
+
+
+</android.support.v7.widget.CardView>
