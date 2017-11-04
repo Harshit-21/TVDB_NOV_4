@@ -15,8 +15,19 @@ public class Bean_CastnCrewResponse {
     private Integer id;
     @SerializedName("cast")
     @Expose
+    private ArrayList<Bean_CastnCrew> crew;
+    @SerializedName("crew")
+    @Expose
     private ArrayList<Bean_CastnCrew> cast;
 
+
+    public ArrayList<Bean_CastnCrew> getCrew() {
+        return crew;
+    }
+
+    public void setCrew(ArrayList<Bean_CastnCrew> crew) {
+        this.crew = crew;
+    }
 
     public Integer getId() {
         return id;

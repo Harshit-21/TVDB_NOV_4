@@ -22,9 +22,11 @@ import com.example.harshit.tvdb.Adapters.MovieListAdapter;
 import com.example.harshit.tvdb.Adapters.SliderPagerAdapter;
 import com.example.harshit.tvdb.Application.MyApplication;
 import com.example.harshit.tvdb.Interfaces.RecylerClickEvents;
+import com.example.harshit.tvdb.Interfaces.SliderClick;
 import com.example.harshit.tvdb.Pojo.Bean_MovieDetails;
 import com.example.harshit.tvdb.Pojo.Bean_Genre;
 import com.example.harshit.tvdb.Pojo.Bean_MovieResponse;
+import com.example.harshit.tvdb.Pojo.Bean_SliderImages;
 import com.example.harshit.tvdb.R;
 import com.example.harshit.tvdb.Utils.AppConstant;
 import com.example.harshit.tvdb.Utils.AppUtil;
@@ -41,12 +43,12 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-public class TvActivity extends AppCompatActivity implements RecylerClickEvents {
+public class TvActivity extends AppCompatActivity implements RecylerClickEvents, SliderClick {
 
     private ViewPager vp_slider;
     private LinearLayout ll_dots;
     SliderPagerAdapter sliderPagerAdapter;
-    ArrayList<Integer> slider_image_list;
+    ArrayList<Bean_SliderImages> slider_image_list;
     private TextView[] dots;
     int page_position = 0;
     // this are the views
@@ -134,12 +136,16 @@ public class TvActivity extends AppCompatActivity implements RecylerClickEvents 
 
 //Add few items to slider_image_list ,this should contain url of images which should be displayed in slider
 // here i am adding few sample image links, you can add your own
+        Integer images_array[] = new Integer[]{R.drawable.ic_menu_manage, R.drawable.ic_menu_manage, R.drawable.ic_menu_manage, R.drawable.ic_menu_manage};
+        String images_title[] = new String[]{"now_playing", "popular", "top_rated", "upcoming"};
 
-        slider_image_list.add(R.drawable.ic_menu_camera);
-        slider_image_list.add(R.drawable.ic_menu_manage);
-        slider_image_list.add(R.drawable.ic_menu_share);
-        slider_image_list.add(R.drawable.ic_menu_slideshow);
 
+        for (int i = 0; i < 4; i++) {
+            Bean_SliderImages bean_sliderImages = new Bean_SliderImages();
+            bean_sliderImages.setId(images_array[i]);
+            bean_sliderImages.setName(images_title[i]);
+            slider_image_list.add(bean_sliderImages);
+        }
 
     }
 
@@ -156,7 +162,7 @@ public class TvActivity extends AppCompatActivity implements RecylerClickEvents 
     private void setSliderAdapter() {
 
 
-        sliderPagerAdapter = new SliderPagerAdapter(this, slider_image_list);
+        sliderPagerAdapter = new SliderPagerAdapter(this, slider_image_list,this);
         vp_slider.setAdapter(sliderPagerAdapter);
 
         vp_slider.setOnPageChangeListener(new ViewPager.OnPageChangeListener() {
@@ -291,4 +297,8 @@ public class TvActivity extends AppCompatActivity implements RecylerClickEvents 
     }
 
 
+    @Override
+    public void onClick(String name, Object object, String tag) {
+
+    }
 }

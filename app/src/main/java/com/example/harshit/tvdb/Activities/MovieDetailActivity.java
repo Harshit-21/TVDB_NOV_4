@@ -1,8 +1,11 @@
 package com.example.harshit.tvdb.Activities;
 
+import android.content.ComponentName;
 import android.content.Intent;
+import android.content.ServiceConnection;
 import android.graphics.Color;
 import android.os.Handler;
+import android.os.IBinder;
 import android.support.annotation.NonNull;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v4.view.ViewPager;
@@ -17,6 +20,7 @@ import android.view.View;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import com.example.harshit.tvdb.Adapters.SliderImageAdapter;
@@ -26,7 +30,9 @@ import com.example.harshit.tvdb.Fragments.YoutubeFragment;
 import com.example.harshit.tvdb.Pojo.Bean_MovieDetails;
 import com.example.harshit.tvdb.Pojo.Bean_MovieImages;
 import com.example.harshit.tvdb.Pojo.Bean_Poster;
+import com.example.harshit.tvdb.Pojo.Bean_Translations;
 import com.example.harshit.tvdb.R;
+import com.example.harshit.tvdb.Service.IsoService;
 import com.example.harshit.tvdb.Utils.AppConstant;
 import com.example.harshit.tvdb.Utils.AppUtil;
 
@@ -47,8 +53,11 @@ public class MovieDetailActivity extends AppCompatActivity implements View.OnCli
     int page_position = 0;
     private SliderImageAdapter sliderImageAdapter;
     private ImageView img_posterimage;
-    private TextView tv_movietitle, tv_movierevenue, tv_movieruntime, tv_moviepopularity, tv_moviereleasedate, tv_moviestatus, tv_moviebudget, tv_movieVideos, tv_recommendedmovies, tv_moviecrew;
+    private TextView tv_moviereleasedateiso, tv_moviealternativeTitles, tv_movietitle, tv_movierevenue, tv_movieruntime, tv_moviepopularity, tv_moviereleasedate, tv_moviestatus, tv_moviebudget, tv_movieVideos, tv_recommendedmovies, tv_moviecrew;
     private FrameLayout fl_container;
+    boolean mBounded;
+    IsoService mServer;
+    private ProgressBar progress_movieDetail;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -193,6 +202,7 @@ public class MovieDetailActivity extends AppCompatActivity implements View.OnCli
             if (AppUtil.isNetworkAvailable(this)) {
                 MyApplication application = (MyApplication) getApplication();
                 if (application != null) {
+                    progress_movieDetail.setVisibility(View.VISIBLE);
                     Call<Bean_MovieDetails> call = application.getRetrofitInstance().getMovieDetails(bean_movieDetails.getId(), AppConstant.API_KEY, AppConstant.ENG_LANGUAGE);
                     call.enqueue(new Callback<Bean_MovieDetails>() {
                         @Override
@@ -223,6 +233,7 @@ public class MovieDetailActivity extends AppCompatActivity implements View.OnCli
 
     private void handleMovieDetailData(Bean_MovieDetails bean_movieDetails) {
         if (bean_movieDetails != null) {
+            progress_movieDetail.setVisibility(View.GONE);
             tv_movietitle.setText(bean_movieDetails.getTitle() != null ? bean_movieDetails.getTitle() : "");
             tv_moviepopularity.setText(String.valueOf(bean_movieDetails.getPopularity() != null ? bean_movieDetails.getPopularity() : ""));
             tv_moviereleasedate.setText(!TextUtils.isEmpty(bean_movieDetails.getReleaseDate()) ? bean_movieDetails.getReleaseDate() : "");
@@ -244,6 +255,8 @@ public class MovieDetailActivity extends AppCompatActivity implements View.OnCli
         tv_movieVideos.setOnClickListener(this);
         tv_recommendedmovies.setOnClickListener(this);
         tv_moviecrew.setOnClickListener(this);
+        tv_moviealternativeTitles.setOnClickListener(this);
+        tv_moviereleasedateiso.setOnClickListener(this);
     }
 
     private void initViews() {
@@ -254,7 +267,9 @@ public class MovieDetailActivity extends AppCompatActivity implements View.OnCli
         tv_moviebudget = (TextView) findViewById(R.id.tv_moviebudget);
         tv_movieVideos = (TextView) findViewById(R.id.tv_movieVideos);
         tv_recommendedmovies = (TextView) findViewById(R.id.tv_recommendedmovies);
+        tv_moviereleasedateiso = (TextView) findViewById(R.id.tv_moviereleasedateiso);
         tv_moviecrew = (TextView) findViewById(R.id.tv_moviecrew);
+        tv_moviealternativeTitles = (TextView) findViewById(R.id.tv_moviealternativeTitles);
         tv_movierevenue = (TextView) findViewById(R.id.tv_movierevenue);
         tv_movieruntime = (TextView) findViewById(R.id.tv_movieruntime);
         img_posterimage = (ImageView) findViewById(R.id.img_posterimage);
@@ -262,6 +277,7 @@ public class MovieDetailActivity extends AppCompatActivity implements View.OnCli
         vp_slider = (ViewPager) findViewById(R.id.vp_slider);
         ll_dots = (LinearLayout) findViewById(R.id.ll_dots);
         fl_container = (FrameLayout) findViewById(R.id.fl_container);
+        progress_movieDetail = findViewById(R.id.progress_movieDetail);
     }
 
     private void getDataFromBundle() {
@@ -280,15 +296,68 @@ public class MovieDetailActivity extends AppCompatActivity implements View.OnCli
 
             case R.id.tv_moviecrew:
                 openCrewnCastActivity();
-                    break;
+                break;
+            case R.id.tv_moviealternativeTitles:
+                AppUtil.showToast(this, "coming soon");
+
+                break;
+            case R.id.tv_moviereleasedateiso:
+                AppUtil.showToast(this, "coming soon");
+                break;
         }
+    }
+
+    @Override
+    protected void onStart() {
+        super.onStart();
+        Intent mIntent = new Intent(this, IsoService.class);
+        mIntent.putExtra("MOVIE_ID", String.valueOf(bean_movieDetails.getId()));
+        bindService(mIntent, mConnection, BIND_AUTO_CREATE);
+    }
+
+    ;
+
+    ServiceConnection mConnection = new ServiceConnection() {
+
+        public void onServiceDisconnected(ComponentName name) {
+            AppUtil.showToast(MovieDetailActivity.this, "Service is disconnected");
+            mBounded = false;
+            mServer = null;
+        }
+
+        public void onServiceConnected(ComponentName name, IBinder service) {
+//          AppUtil.showToast(MovieDetailActivity.this, "Service is connected");
+            mBounded = true;
+            IsoService.LocalBinder mLocalBinder = (IsoService.LocalBinder) service;
+            mServer = mLocalBinder.getServerInstance();
+            mServer.callIsoService();
+
+        }
+    };
+
+    @Override
+    protected void onStop() {
+        super.onStop();
+        if (mBounded) {
+            unbindService(mConnection);
+            mBounded = false;
+            Log.d("STATUS", "Service is disconnected");
+        }
+    }
+
+
+    private void openAlternativeMovieFragment() {
+        YoutubeFragment fragment = new YoutubeFragment();
+        FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
+        transaction.replace(R.id.fl_container, fragment); // fragment container id in first parameter is the  container(Main layout id) of Activity
+        transaction.addToBackStack(null);  // this will manage backstack
+        transaction.commit();
     }
 
 
     private void openCrewnCastActivity() {
         Intent crewIntent = new Intent(this, CrewActivity.class);
         crewIntent.putExtra("MOVIE_ID", String.valueOf(bean_movieDetails.getId()));
-
         startActivity(crewIntent);
     }
 
@@ -305,4 +374,6 @@ public class MovieDetailActivity extends AppCompatActivity implements View.OnCli
         transaction.addToBackStack(null);  // this will manage backstack
         transaction.commit();
     }
+
+
 }

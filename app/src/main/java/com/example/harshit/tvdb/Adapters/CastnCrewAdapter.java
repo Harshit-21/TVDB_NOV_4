@@ -49,7 +49,7 @@ public class CastnCrewAdapter extends RecyclerView.Adapter<CastnCrewAdapter.MyVi
         final Bean_CastnCrew bean_castnCrew = castcrewlist.get(position);
 
         if (bean_castnCrew.getProfilePath() != null)
-            Picasso.with(context).load(AppConstant.IMG_PATH+bean_castnCrew.getProfilePath()).error(context.getResources().getDrawable(R.drawable.something_went_wrong)).into(holder.img_title);
+            Picasso.with(context).load(AppConstant.IMG_PATH + bean_castnCrew.getProfilePath()).error(context.getResources().getDrawable(R.drawable.something_went_wrong)).into(holder.img_title);
 
         holder.tv_castorcrewName.setText(!TextUtils.isEmpty(bean_castnCrew.getName()) ? bean_castnCrew.getName() : "");
         holder.tv_chracter.setText(!TextUtils.isEmpty(bean_castnCrew.getCharacter()) ? bean_castnCrew.getCharacter() : "");

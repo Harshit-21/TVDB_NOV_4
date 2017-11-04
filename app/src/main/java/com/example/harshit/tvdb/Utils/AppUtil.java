@@ -8,6 +8,7 @@ import android.widget.Toast;
 
 import com.example.harshit.tvdb.Activities.NonInternetorErrorActivity;
 
+import java.io.File;
 import java.math.BigDecimal;
 import java.text.Format;
 import java.text.NumberFormat;
@@ -53,7 +54,7 @@ public class AppUtil {
 
 
     public static String currencyFormatter(String amount) {
-        double amount1=Double.parseDouble(amount);
+        double amount1 = Double.parseDouble(amount);
         NumberFormat formatter = NumberFormat.getCurrencyInstance(new Locale("en", "IN"));
         String moneyString = formatter.format(amount1);
         return moneyString;
@@ -62,15 +63,26 @@ public class AppUtil {
 
     public static String getFormattedTime(int time) {
         if (time <= 60) {
-            return String.valueOf(time)+" min";
+            return String.valueOf(time) + " min";
         } else {
 
             int hour = time / 60;
             // watever the hour came
             int count = hour * 60;
             int remaining_time = time - count;
-            return hour + " hour and " + remaining_time+" min";
+            return hour + " hour and " + remaining_time + " min";
         }
+    }
+
+
+    public static boolean isFileExists(Context context, String filename) {
+        String currentFilePath = context.getFilesDir() + "/" + filename;
+        File currentfile = new File(currentFilePath);
+
+        if (currentfile.exists()) {
+            return true;
+        }
+        return false;
     }
 
 

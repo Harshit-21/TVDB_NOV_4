@@ -21,6 +21,7 @@ import com.example.harshit.tvdb.Pojo.Bean_MovieDetails;
 import com.example.harshit.tvdb.Pojo.Bean_MovieResponse;
 import com.example.harshit.tvdb.R;
 import com.example.harshit.tvdb.Utils.AppConstant;
+import com.example.harshit.tvdb.Utils.AppUtil;
 
 import java.util.ArrayList;
 
@@ -44,7 +45,19 @@ public class DashBoardActivity extends AppCompatActivity implements NavigationVi
         setSupportActionBar(toolbar);
         setDrawer();
         setListners();
-//        callService();
+        callBgService();
+    }
+
+    private void callBgService() {
+
+        if(!AppUtil.isFileExists(this,AppConstant.ISO_FILE))
+        {
+            // this means file not exist we need to create a file and put data into it
+
+
+        }
+
+
     }
 
     private void setDrawer() {
@@ -69,29 +82,6 @@ public class DashBoardActivity extends AppCompatActivity implements NavigationVi
 
     }
 
-    private void callService() {
-        MyApplication application = (MyApplication) getApplication();
-        if (application != null) {
-            Call<Bean_MovieResponse> call = application.getRetrofitInstance().getTopRatedMovies(AppConstant.API_KEY,"");
-            call.enqueue(new Callback<Bean_MovieResponse>() {
-                @Override
-                public void onResponse(@NonNull Call<Bean_MovieResponse> call, @NonNull Response<Bean_MovieResponse> response) {
-                    int statusCode = response.code();
-                    ArrayList<Bean_MovieDetails> arr_movies = response.body().getResults();
-                    handleResult(arr_movies);
-                }
-
-                @Override
-                public void onFailure(Call<Bean_MovieResponse> call, Throwable t) {
-                    // Log error here since request failed
-                    Log.e("ERROR", t.toString());
-                }
-            });
-
-
-        }
-
-    }
 
     private void handleResult(ArrayList<Bean_MovieDetails> arr_movies) {
         if (arr_movies != null) {

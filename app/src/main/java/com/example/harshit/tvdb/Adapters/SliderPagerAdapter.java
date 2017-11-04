@@ -8,6 +8,8 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 
+import com.example.harshit.tvdb.Interfaces.SliderClick;
+import com.example.harshit.tvdb.Pojo.Bean_SliderImages;
 import com.example.harshit.tvdb.R;
 
 import java.util.ArrayList;
@@ -19,11 +21,13 @@ import java.util.ArrayList;
 public class SliderPagerAdapter extends PagerAdapter {
     private LayoutInflater layoutInflater;
     Activity activity;
-    ArrayList<Integer> image_arraylist;
+    ArrayList<Bean_SliderImages> image_arraylist;
+    private SliderClick sliderClick;
 
-    public SliderPagerAdapter(Activity activity, ArrayList<Integer> image_arraylist) {
+    public SliderPagerAdapter(Activity activity, ArrayList<Bean_SliderImages> image_arraylist,SliderClick sliderClick) {
         this.activity = activity;
         this.image_arraylist = image_arraylist;
+        this.sliderClick=sliderClick;
     }
 
     @Override
@@ -32,7 +36,18 @@ public class SliderPagerAdapter extends PagerAdapter {
 
         View view = layoutInflater.inflate(R.layout.slidingimages_layout, container, false);
         ImageView im_slider = (ImageView) view.findViewById(R.id.image);
-        im_slider.setBackgroundResource(image_arraylist.get(position));
+        final Bean_SliderImages bean_sliderImages = image_arraylist.get(position);
+        im_slider.setBackgroundResource(bean_sliderImages.getId());
+
+        im_slider.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                sliderClick.onClick(bean_sliderImages.getName(),null,activity.getResources().getString(R.string.slider_click));
+            }
+        });
+
+
+
         container.addView(view);
         return view;
     }

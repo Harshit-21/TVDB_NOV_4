@@ -5,6 +5,7 @@ import com.example.harshit.tvdb.Pojo.Bean_GenreResponse;
 import com.example.harshit.tvdb.Pojo.Bean_MovieDetails;
 import com.example.harshit.tvdb.Pojo.Bean_MovieImages;
 import com.example.harshit.tvdb.Pojo.Bean_MovieResponse;
+import com.example.harshit.tvdb.Pojo.Bean_TranslationsResponse;
 
 import retrofit2.Call;
 import retrofit2.http.GET;
@@ -22,7 +23,7 @@ public interface ApiInterface {
 
     //************************this is for getting the list of movies according to the genre********************************
     @GET("genre/{genre_id}/movies")
-    Call<Bean_MovieResponse> getMovieAccToGenre(@Path("genre_id") String genre_id, @Query("api_key") String apiKey, @Query("language") String language, @Query("include_adult") boolean is_adult, @Query("sort_by") String order);
+    Call<Bean_MovieResponse> getMovieAccToGenre(@Path("genre_id") int genre_id, @Query("api_key") String apiKey, @Query("language") String language,@Query("page") int page, @Query("include_adult") boolean is_adult, @Query("sort_by") String order);
 
     //************************this is for getting to get movie details ********************************
     @GET("movie/{movie_id}")
@@ -52,36 +53,31 @@ public interface ApiInterface {
 //    **********to get the transalations means to get the iso n all stuff********************
 
     @GET("movie/{movie_id}/translations")
-    Call<Bean_MovieResponse> getDiffrentRegionsInfoOfMovie(@Path("movie_id") String movie_id, @Query("api_key") String apiKey);
+    Call<Bean_TranslationsResponse> getDiffrentRegionsInfoOfMovie(@Path("movie_id") int movie_id, @Query("api_key") String apiKey);
 
 
     //          --------------------to get the recommended movies************************
     @GET("movie/{movie_id}/recommendations")
     Call<Bean_MovieResponse> getRecommendedMovies(@Path("movie_id") String movie_id, @Query("api_key") String apiKey, @Query("language") String language);
-
-    //            **********************to get the latest movies***************
-    @GET("movie/latest")
-    Call<Bean_MovieResponse> getLatestMovies(@Query("api_key") String apiKey, @Query("language") String language);
-
     //            **********************to get the now_playing movies***************
 
     @GET("movie/now_playing")
-    Call<Bean_MovieResponse> getNowPlayingMovies(@Query("api_key") String apiKey, @Query("language") String language);
+    Call<Bean_MovieResponse> getNowPlayingMovies(@Query("api_key") String apiKey, @Query("language") String language,@Query("page") int page);
 
     //            **********************to get the popular movies***************
 
     @GET("movie/popular")
-    Call<Bean_MovieResponse> getPopularMovies(@Query("api_key") String apiKey, @Query("language") String language);
+    Call<Bean_MovieResponse> getPopularMovies(@Query("api_key") String apiKey, @Query("language") String language,@Query("page") int page);
 
     //            **********************to get the top_rated movies***************
 
     @GET("movie/top_rated")
-    Call<Bean_MovieResponse> getTopRatedMovies(@Query("api_key") String apiKey, @Query("language") String language);
+    Call<Bean_MovieResponse> getTopRatedMovies(@Query("api_key") String apiKey, @Query("language") String language,@Query("page") int page);
 
     //            **********************to get the upcoming movies***************
 
     @GET("movie/upcoming")
-    Call<Bean_MovieResponse> getupComingMovies(@Query("api_key") String apiKey, @Query("language") String language);
+    Call<Bean_MovieResponse> getupComingMovies(@Query("api_key") String apiKey, @Query("language") String language,@Query("page") int page);
 
 
 

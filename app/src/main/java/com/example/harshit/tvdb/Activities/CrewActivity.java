@@ -62,9 +62,13 @@ public class CrewActivity extends AppCompatActivity implements RecylerClickEvent
                         public void onResponse(@NonNull Call<Bean_CastnCrewResponse> call, @NonNull Response<Bean_CastnCrewResponse> response) {
 
                             if (!response.message().isEmpty()) {
-                                ArrayList<Bean_CastnCrew> arr_castncrew = response.body().getCast();
-                                handleData(arr_castncrew);
+                                ArrayList<Bean_CastnCrew> arr_cast = response.body().getCast();
+                                ArrayList<Bean_CastnCrew> arr_crew = response.body().getCrew();
 
+                                ArrayList<Bean_CastnCrew> arr_castncrew = new ArrayList<>();
+                                arr_castncrew.addAll(arr_cast);
+                                arr_castncrew.addAll(arr_crew);
+                                handleData(arr_castncrew);
                             }
                         }
 
@@ -94,7 +98,7 @@ public class CrewActivity extends AppCompatActivity implements RecylerClickEvent
             progress_crew.setVisibility(View.GONE);
             recyler_crew.setVisibility(View.VISIBLE);
 
-            castncrewadapter = new CastnCrewAdapter(arr_castncrew,getApplicationContext(), this);
+            castncrewadapter = new CastnCrewAdapter(arr_castncrew, getApplicationContext(), this);
             RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(getApplicationContext(), LinearLayoutManager.VERTICAL, false);
             recyler_crew.setLayoutManager(mLayoutManager);
             recyler_crew.setItemAnimator(new DefaultItemAnimator());
