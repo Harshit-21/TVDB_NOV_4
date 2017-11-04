@@ -7,65 +7,95 @@
     tools:context="com.example.harshit.tvdb.Activities.MoviesListActivity">
 
 
-            <RelativeLayout
-                android:id="@+id/rl_movieSlider"
-                android:layout_width="match_parent"
-                android:layout_height="@dimen/height_100">
+    <RelativeLayout
+        android:id="@+id/rl_movieSlider"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/height_100">
 
-                <android.support.v4.view.ViewPager
-                    android:id="@+id/vp_slider"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent" />
+        <android.support.v4.view.ViewPager
+            android:id="@+id/vp_slider"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent" />
 
-                <LinearLayout
-                    android:id="@+id/ll_dots"
-                    android:layout_width="match_parent"
-                    android:layout_height="30dp"
-                    android:layout_alignParentBottom="true"
-                    android:layout_marginBottom="20dp"
-                    android:gravity="center"
-                    android:orientation="horizontal" />
+        <LinearLayout
+            android:id="@+id/ll_dots"
+            android:layout_width="match_parent"
+            android:layout_height="30dp"
+            android:layout_alignParentBottom="true"
+            android:layout_marginBottom="20dp"
+            android:gravity="center"
+            android:orientation="horizontal" />
 
-            </RelativeLayout>
+    </RelativeLayout>
 
-            <ProgressBar
-                android:id="@+id/progress_genre"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_centerHorizontal="true"
-                android:layout_below="@+id/rl_movieSlider"
-                android:layout_marginTop="@dimen/margin_10"
-                />
-
-
-            <android.support.v7.widget.RecyclerView
-                android:id="@+id/recyler_genre"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:visibility="gone"
-                android:layout_below="@+id/rl_movieSlider"
-                android:layout_marginTop="@dimen/margin_10" />
+    <ProgressBar
+        android:id="@+id/progress_genre"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/rl_movieSlider"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="@dimen/margin_10" />
 
 
-            <android.support.v7.widget.RecyclerView
-                android:id="@+id/recyler_moviegenre"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_below="@+id/recyler_genre"
-                android:visibility="gone"
-                android:layout_marginTop="@dimen/margin_10" />
-
-            <ProgressBar
-                android:id="@+id/progress_moviegenre"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_centerHorizontal="true"
-                android:visibility="gone"
-                android:layout_below="@+id/recyler_genre"
-                android:layout_marginTop="@dimen/margin_10"
-                />
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/recyler_genre"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/rl_movieSlider"
+        android:layout_marginTop="@dimen/margin_10"
+        android:visibility="gone" />
 
 
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/recyler_moviegenre"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/recyler_genre"
+        android:layout_above="@+id/ll_page"
+        android:layout_marginBottom="@dimen/margin_5"
+        android:layout_marginTop="@dimen/margin_10" />
+
+    <ProgressBar
+        android:id="@+id/progress_moviegenre"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/recyler_genre"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="@dimen/margin_10"
+        android:visibility="gone" />
+
+    <LinearLayout
+        android:id="@+id/ll_page"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:orientation="horizontal"
+        android:visibility="gone"
+        android:background="@color/colorPrimary"
+        android:layout_alignParentBottom="true"
+        android:padding="@dimen/padding_5">
+
+        <TextView
+            android:id="@+id/tv_previous"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight=".5"
+            android:gravity="center"
+            android:padding="@dimen/padding_5"
+            android:text="Previous" />
+
+        <TextView
+            android:id="@+id/tv_next"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight=".5"
+            android:gravity="center"
+            android:padding="@dimen/padding_5"
+
+            android:text="Next" />
+
+
+    </LinearLayout>
 
 
 </RelativeLayout>
