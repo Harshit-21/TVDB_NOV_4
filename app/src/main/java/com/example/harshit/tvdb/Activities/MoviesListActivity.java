@@ -162,7 +162,7 @@ public class MoviesListActivity extends AppCompatActivity implements RecylerClic
 //Add few items to slider_image_list ,this should contain url of images which should be displayed in slider
 // here i am adding few sample image links, you can add your own
 
-        Integer images_array[] = new Integer[]{R.drawable.ic_menu_manage, R.drawable.ic_menu_manage, R.drawable.ic_menu_manage, R.drawable.ic_menu_manage};
+        Integer images_array[] = new Integer[]{R.drawable.now_playing_ico, R.drawable.popular_ico, R.drawable.top_rated_ico, R.drawable.upcoming_ico};
         String images_title[] = new String[]{"now_playing", "popular", "top_rated", "upcoming"};
 
 
