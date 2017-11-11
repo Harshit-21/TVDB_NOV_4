@@ -2,9 +2,9 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:layout_margin="@dimen/margin_10"
-    tools:context="com.example.harshit.tvdb.Fragments.AlternativeMovieFragment">
-
+    android:background="@color/white"
+    android:elevation="@dimen/elevation_10"
+    tools:context="com.example.harshit.tvdb.Fragments.ReleaseDateFragment">
 
     <ImageView
         android:id="@+id/img_close"
@@ -16,19 +16,18 @@
         android:padding="@dimen/padding_10"
         android:src="@drawable/close_icon" />
 
-    <LinearLayout
-        android:id="@+id/ll_main"
-        android:layout_width="wrap_content"
+
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/recyler_releaseDate"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_below="@+id/img_close"
-        android:orientation="vertical" />
-
+        android:visibility="gone" />
 
     <ProgressBar
-        android:id="@+id/progress_alternative"
+        android:id="@+id/progress_release"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/img_close"
         android:layout_centerInParent="true" />
 
 

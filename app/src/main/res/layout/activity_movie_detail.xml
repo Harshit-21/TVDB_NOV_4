@@ -19,19 +19,19 @@
             android:layout_height="wrap_content">
 
 
-
             <ProgressBar
                 android:id="@+id/progress_movieDetail"
-                android:layout_centerInParent="true"
                 android:layout_width="match_parent"
-                android:visibility="gone"
-                android:layout_height="wrap_content" />
+                android:layout_height="wrap_content"
+                android:layout_centerInParent="true"
+                android:visibility="gone" />
 
             <FrameLayout
                 android:id="@+id/fl_container"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_centerInParent="true" />
+                android:layout_height="@dimen/height_200"
+                android:background="@color/white"
+                android:layout_centerVertical="true" />
 
 
             <RelativeLayout
