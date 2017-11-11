@@ -26,13 +26,15 @@ import android.widget.TextView;
 import com.example.harshit.tvdb.Adapters.SliderImageAdapter;
 import com.example.harshit.tvdb.Adapters.SliderPagerAdapter;
 import com.example.harshit.tvdb.Application.MyApplication;
+import com.example.harshit.tvdb.Fragments.AlternativeMovieFragment;
+import com.example.harshit.tvdb.Fragments.ReleaseDateFragment;
 import com.example.harshit.tvdb.Fragments.YoutubeFragment;
 import com.example.harshit.tvdb.Pojo.Bean_MovieDetails;
 import com.example.harshit.tvdb.Pojo.Bean_MovieImages;
 import com.example.harshit.tvdb.Pojo.Bean_Poster;
 import com.example.harshit.tvdb.Pojo.Bean_Translations;
+import com.example.harshit.tvdb.Pojo.Bean_TranslationsResponse;
 import com.example.harshit.tvdb.R;
-import com.example.harshit.tvdb.Service.IsoService;
 import com.example.harshit.tvdb.Utils.AppConstant;
 import com.example.harshit.tvdb.Utils.AppUtil;
 
@@ -56,8 +58,9 @@ public class MovieDetailActivity extends AppCompatActivity implements View.OnCli
     private TextView tv_moviereleasedateiso, tv_moviealternativeTitles, tv_movietitle, tv_movierevenue, tv_movieruntime, tv_moviepopularity, tv_moviereleasedate, tv_moviestatus, tv_moviebudget, tv_movieVideos, tv_recommendedmovies, tv_moviecrew;
     private FrameLayout fl_container;
     boolean mBounded;
-    IsoService mServer;
     private ProgressBar progress_movieDetail;
+    public static ArrayList<Bean_Translations> arr_translations;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -66,8 +69,57 @@ public class MovieDetailActivity extends AppCompatActivity implements View.OnCli
         getDataFromBundle();
         initViews();
         setListners();
+        // as the retrofit is woring in the background so we can use the async way to do this
+        getTransaltions();
         getMovieDetails();
         getMovieImages();
+    }
+
+    private void handleIsoView() {
+        if (arr_translations != null) {
+            // now the transaltions is visible
+
+            tv_moviereleasedateiso.setVisibility(View.VISIBLE);
+            tv_moviealternativeTitles.setVisibility(View.VISIBLE);
+        } else {
+            tv_moviereleasedateiso.setVisibility(View.GONE);
+            tv_moviealternativeTitles.setVisibility(View.GONE);
+        }
+    }
+
+    private void getTransaltions() {
+        if (bean_movieDetails.getId() != null) {
+            if (AppUtil.isNetworkAvailable(this)) {
+                MyApplication application = (MyApplication) getApplication();
+                if (application != null) {
+                    Call<Bean_TranslationsResponse> call = application.getRetrofitInstance().getDiffrentRegionsInfoOfMovie(bean_movieDetails.getId(), AppConstant.API_KEY);
+                    call.enqueue(new Callback<Bean_TranslationsResponse>() {
+                        @Override
+                        public void onResponse(@NonNull Call<Bean_TranslationsResponse> call, @NonNull Response<Bean_TranslationsResponse> response) {
+
+                            if (!response.message().isEmpty()) {
+                                arr_translations = response.body().getTranslations();
+                                handleIsoView();
+
+                            }
+                        }
+
+                        @Override
+                        public void onFailure(Call<Bean_TranslationsResponse> call, Throwable t) {
+                            // Log error here since request failed
+                            Log.e("ERROR", t.toString());
+                            AppUtil.openNonInternetActivity(MovieDetailActivity.this, getResources().getString(R.string.something_went_wrong));
+                            finish();
+                        }
+                    });
+
+
+                }
+            } else {
+                AppUtil.openNonInternetActivity(this, getResources().getString(R.string.no_internet));
+                finish();
+            }
+        }
     }
 
     private void getMovieImages() {
@@ -288,7 +340,7 @@ public class MovieDetailActivity extends AppCompatActivity implements View.OnCli
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.tv_movieVideos:
-                openVideoFragment();
+//                openVideoFragment();
                 break;
             case R.id.tv_recommendedmovies:
                 openRecommendedMoviesActivity();
@@ -298,58 +350,39 @@ public class MovieDetailActivity extends AppCompatActivity implements View.OnCli
                 openCrewnCastActivity();
                 break;
             case R.id.tv_moviealternativeTitles:
-                AppUtil.showToast(this, "coming soon");
+                openAlternativeMovieFragment();
+//                AppUtil.showToast(this, "coming soon");
 
                 break;
             case R.id.tv_moviereleasedateiso:
-                AppUtil.showToast(this, "coming soon");
+                openReleaseDateFragment();
+//                AppUtil.showToast(this, "coming soon");
                 break;
         }
     }
 
-    @Override
-    protected void onStart() {
-        super.onStart();
-        Intent mIntent = new Intent(this, IsoService.class);
-        mIntent.putExtra("MOVIE_ID", String.valueOf(bean_movieDetails.getId()));
-        bindService(mIntent, mConnection, BIND_AUTO_CREATE);
+    private void openReleaseDateFragment() {
+
+        Bundle bundle = new Bundle();
+        bundle.putString("MOVIE_ID", bean_movieDetails.getId().toString());
+        //set Fragmentclass Arguments
+
+        ReleaseDateFragment releaseDateFragment = new ReleaseDateFragment();
+        releaseDateFragment.setArguments(bundle);
+        FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
+        transaction.replace(R.id.fl_container, releaseDateFragment); // fragment container id in first parameter is the  container(Main layout id) of Activity
+        transaction.addToBackStack(null);  // this will manage backstack
+        transaction.commit();
+
     }
-
-    ;
-
-    ServiceConnection mConnection = new ServiceConnection() {
-
-        public void onServiceDisconnected(ComponentName name) {
-            AppUtil.showToast(MovieDetailActivity.this, "Service is disconnected");
-            mBounded = false;
-            mServer = null;
-        }
-
-        public void onServiceConnected(ComponentName name, IBinder service) {
-//          AppUtil.showToast(MovieDetailActivity.this, "Service is connected");
-            mBounded = true;
-            IsoService.LocalBinder mLocalBinder = (IsoService.LocalBinder) service;
-            mServer = mLocalBinder.getServerInstance();
-            mServer.callIsoService();
-
-        }
-    };
-
-    @Override
-    protected void onStop() {
-        super.onStop();
-        if (mBounded) {
-            unbindService(mConnection);
-            mBounded = false;
-            Log.d("STATUS", "Service is disconnected");
-        }
-    }
-
 
     private void openAlternativeMovieFragment() {
-        YoutubeFragment fragment = new YoutubeFragment();
+        Bundle bundle = new Bundle();
+        bundle.putString("MOVIE_ID", bean_movieDetails.getId().toString());
+        AlternativeMovieFragment alternativeMovieFragment = new AlternativeMovieFragment();
+        alternativeMovieFragment.setArguments(bundle);
         FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
-        transaction.replace(R.id.fl_container, fragment); // fragment container id in first parameter is the  container(Main layout id) of Activity
+        transaction.replace(R.id.fl_container, alternativeMovieFragment); // fragment container id in first parameter is the  container(Main layout id) of Activity
         transaction.addToBackStack(null);  // this will manage backstack
         transaction.commit();
     }
@@ -368,11 +401,11 @@ public class MovieDetailActivity extends AppCompatActivity implements View.OnCli
     }
 
     private void openVideoFragment() {
-        YoutubeFragment fragment = new YoutubeFragment();
-        FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
-        transaction.replace(R.id.fl_container, fragment); // fragment container id in first parameter is the  container(Main layout id) of Activity
-        transaction.addToBackStack(null);  // this will manage backstack
-        transaction.commit();
+//        YoutubeFragment fragment = new YoutubeFragment();
+//        FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
+//        transaction.replace(R.id.fl_container, fragment); // fragment container id in first parameter is the  container(Main layout id) of Activity
+//        transaction.addToBackStack(null);  // this will manage backstack
+//        transaction.commit();
     }
 
 

@@ -1,10 +1,12 @@
 package com.example.harshit.tvdb.Interfaces;
 
+import com.example.harshit.tvdb.Pojo.Bean_Alternatives;
 import com.example.harshit.tvdb.Pojo.Bean_CastnCrewResponse;
 import com.example.harshit.tvdb.Pojo.Bean_GenreResponse;
 import com.example.harshit.tvdb.Pojo.Bean_MovieDetails;
 import com.example.harshit.tvdb.Pojo.Bean_MovieImages;
 import com.example.harshit.tvdb.Pojo.Bean_MovieResponse;
+import com.example.harshit.tvdb.Pojo.Bean_ReleaseDateResponse;
 import com.example.harshit.tvdb.Pojo.Bean_TranslationsResponse;
 
 import retrofit2.Call;
@@ -31,7 +33,7 @@ public interface ApiInterface {
 
     //            ******************this method is used to get alternative titles of the movie n all stuff********
     @GET("movie/{movie_id}/alternative_titles")
-    Call<Bean_MovieResponse> getAlternativeTitles(@Path("movie_id") String movie_id, @Query("api_key") String apiKey);
+    Call<Bean_Alternatives> getAlternativeTitles(@Path("movie_id") int movie_id, @Query("api_key") String apiKey);
 
     //            ********************get credit of the movie ********************************
     @GET("movie/{movie_id}/credits")
@@ -43,7 +45,7 @@ public interface ApiInterface {
 
     //            *********************to get the release date of the movie in diffrent country--------
     @GET("movie/{movie_id}/release_dates")
-    Call<Bean_MovieResponse> getReleaseDates(@Path("movie_id") String movie_id, @Query("api_key") String apiKey);
+    Call<Bean_ReleaseDateResponse> getReleaseDates(@Path("movie_id") int movie_id, @Query("api_key") String apiKey);
 
     //            *******************to get the videos link to play on youtube**************
     @GET("movie/{movie_id}/videos")

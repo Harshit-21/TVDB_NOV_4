@@ -21,6 +21,63 @@ public class Bean_Translations {
     @Expose
     private String englishName;
 
+    @SerializedName("title")
+    @Expose
+    private String title;
+
+    public String getTitle() {
+        return title;
+    }
+
+    public void setTitle(String title) {
+        this.title = title;
+    }
+
+    @SerializedName("certification")
+    @Expose
+    private String certification;
+    @SerializedName("note")
+    @Expose
+    private String note;
+    @SerializedName("release_date")
+    @Expose
+    private String releaseDate;
+    @SerializedName("type")
+    @Expose
+    private Integer type;
+
+    public String getCertification() {
+        return certification;
+    }
+
+    public void setCertification(String certification) {
+        this.certification = certification;
+    }
+
+    public String getNote() {
+        return note;
+    }
+
+    public void setNote(String note) {
+        this.note = note;
+    }
+
+    public String getReleaseDate() {
+        return releaseDate;
+    }
+
+    public void setReleaseDate(String releaseDate) {
+        this.releaseDate = releaseDate;
+    }
+
+    public Integer getType() {
+        return type;
+    }
+
+    public void setType(Integer type) {
+        this.type = type;
+    }
+
     public String getIso6391() {
         return iso6391;
     }
@@ -52,4 +109,8 @@ public class Bean_Translations {
     public void setEnglishName(String englishName) {
         this.englishName = englishName;
     }
+
+
+
+
 }

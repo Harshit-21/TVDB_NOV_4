@@ -12,6 +12,9 @@ import java.io.File;
 import java.math.BigDecimal;
 import java.text.Format;
 import java.text.NumberFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.Locale;
 
 /**
@@ -85,5 +88,19 @@ public class AppUtil {
         return false;
     }
 
+
+    public static String getFormattedDate(String release_date) {
+        //2017-10-06
+        SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd");
+        Date date;
+        try {
+            date = df.parse(release_date);
+            String release = df.format(date);
+            return release;
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+        return "";
+    }
 
 }
