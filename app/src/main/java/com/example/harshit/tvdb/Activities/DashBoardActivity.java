@@ -1,10 +1,14 @@
 package com.example.harshit.tvdb.Activities;
 
+import android.annotation.TargetApi;
+import android.app.ActivityOptions;
 import android.content.Intent;
 import android.graphics.Color;
+import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.annotation.NonNull;
+import android.support.v4.app.ActivityOptionsCompat;
 import android.support.v4.view.ViewPager;
 import android.support.v7.widget.CardView;
 import android.text.Html;
@@ -269,9 +273,12 @@ public class DashBoardActivity extends AppCompatActivity implements NavigationVi
         startActivity(intent_tv);
     }
 
+    @TargetApi(Build.VERSION_CODES.LOLLIPOP)
     private void openMoviesActivity() {
         Intent intent_movies = new Intent(this, MoviesListActivity.class);
-        startActivity(intent_movies);
+        // herew are the 3 params     context other is view and last is the transition name
+//        ActivityOptionsCompat options = ActivityOptionsCompat.makeSceneTransitionAnimation(this, (View)ivProfile, "profile");
+        startActivity(intent_movies, ActivityOptions.makeSceneTransitionAnimation(this).toBundle());
     }
 
     @Override
