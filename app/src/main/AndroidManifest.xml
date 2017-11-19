@@ -7,7 +7,6 @@
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
 
-
     <application
         android:name=".Application.MyApplication"
         android:allowBackup="true"
@@ -33,13 +32,13 @@
             android:label="@string/title_activity_non_internet"
             android:theme="@style/FullscreenTheme" />
         <activity android:name=".Activities.MovieDetailActivity" />
-        <activity android:name=".Activities.TvActivity" />
+        <activity android:name=".Activities.TvListActivity" />
         <activity android:name=".Activities.TvDetailActivity" />
         <activity android:name=".Activities.RecommendedMoviesActivity" />
-        <activity android:name=".Activities.CrewActivity"></activity>
+        <activity android:name=".Activities.CrewActivity" />
 
-        <service android:name=".Service.IsoService"/>
-
+        <activity android:name=".Activities.TvSeasonEpisodesActivity" />
+        <activity android:name=".Activities.SearchActivity"></activity>
     </application>
 
 </manifest>
