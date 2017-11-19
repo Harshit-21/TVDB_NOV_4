@@ -18,18 +18,27 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
 
-            <android.support.v7.widget.RecyclerView
-                android:id="@+id/recyler_tvImages"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content" />
+<ImageView
+    android:id="@+id/img_backdropImage"
+    android:layout_width="match_parent"
+    android:layout_height="@dimen/height_100"
+    android:scaleType="fitXY"
+    android:layout_alignParentTop="true"
+    android:src="@drawable/popular_ico"/>
 
+
+            <ProgressBar
+                android:id="@+id/progress_tvDetail"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerInParent="true"/>
 
             <LinearLayout
-                android:id="@+id/ll_name"
+                android:id="@+id/ll_nameTV"
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/height_50"
-                android:layout_below="@+id/recyler_tvImages"
                 android:layout_marginTop="@dimen/margin_3"
+                android:layout_below="@+id/img_backdropImage"
                 android:orientation="horizontal"
                 android:weightSum="1">
 
@@ -41,7 +50,7 @@
                     android:layout_weight=".2" />
 
                 <TextView
-                    android:id="@+id/tv_movietitle"
+                    android:id="@+id/tv_titleTV"
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
                     android:layout_weight=".8"
@@ -54,10 +63,10 @@
 
 
             <TextView
-                android:id="@+id/tv_movieDesc"
+                android:id="@+id/tv_DescTV"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_below="@+id/ll_moviename"
+                android:layout_below="@+id/ll_nameTV"
                 android:textSize="@dimen/text_14"
                 android:textStyle="italic" />
 
@@ -65,7 +74,7 @@
             <TableLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_below="@+id/tv_movieDesc">
+                android:layout_below="@+id/tv_DescTV">
 
                 <TableRow
                     android:layout_width="match_parent"
@@ -80,12 +89,11 @@
                         android:text="popularity" />
 
                     <TextView
-                        android:id="@+id/tv_moviepopularity"
+                        android:id="@+id/tv_popularityTV"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_weight="2"
-                        android:gravity="center"
-                        />
+                        android:gravity="center" />
 
 
                 </TableRow>
@@ -100,15 +108,14 @@
                         android:layout_height="wrap_content"
                         android:layout_weight="2"
                         android:gravity="center"
-                        android:text="release date" />
+                        android:text="Air date" />
 
                     <TextView
-                        android:id="@+id/tv_moviereleasedate"
+                        android:id="@+id/tv_AirdateTv"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_weight="2"
-                        android:gravity="center"
-                        />
+                        android:gravity="center" />
 
 
                 </TableRow>
@@ -126,12 +133,11 @@
                         android:text="status" />
 
                     <TextView
-                        android:id="@+id/tv_moviestatus"
+                        android:id="@+id/tv_statusTV"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_weight="2"
-                        android:gravity="center"
-                        />
+                        android:gravity="center" />
 
 
                 </TableRow>
@@ -147,15 +153,14 @@
                         android:layout_height="wrap_content"
                         android:layout_weight="2"
                         android:gravity="center"
-                        android:text="Budget" />
+                        android:text="Vote Avg" />
 
                     <TextView
-                        android:id="@+id/tv_moviebudget"
+                        android:id="@+id/tv_voteavgTV"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_weight="2"
-                        android:gravity="center"
-                        />
+                        android:gravity="center" />
 
 
                 </TableRow>
@@ -170,15 +175,14 @@
                         android:layout_height="wrap_content"
                         android:layout_weight="2"
                         android:gravity="center"
-                        android:text="Revenue" />
+                        android:text="No Of Seasons" />
 
                     <TextView
-                        android:id="@+id/tv_movierevenue"
+                        android:id="@+id/tv_seasonTV"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_weight="2"
-                        android:gravity="center"
-                        />
+                        android:gravity="center" />
 
 
                 </TableRow>
@@ -194,53 +198,84 @@
                         android:layout_height="wrap_content"
                         android:layout_weight="2"
                         android:gravity="center"
-                        android:text="Runtime" />
+                        android:text="Original Language" />
 
                     <TextView
-                        android:id="@+id/tv_movieruntime"
+                        android:id="@+id/tv_languageTV"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_weight="2"
-                        android:gravity="center"
-                        />
+                        android:gravity="center" />
 
 
                 </TableRow>
 
 
                 <TextView
-                    android:id="@+id/tv_movieVideos"
+                    android:id="@+id/tv_VideosTV"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:layout_margin="@dimen/margin_5"
                     android:layout_weight="2"
                     android:drawableEnd="@drawable/ic_menu_manage"
                     android:drawableRight="@drawable/ic_menu_manage"
                     android:gravity="center"
-                    android:layout_margin="@dimen/margin_5"
-
                     android:text="get youtube videos" />
 
                 <TextView
-                    android:id="@+id/tv_recommendedmovies"
+                    android:id="@+id/tv_recommendedTV"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:layout_margin="@dimen/margin_5"
                     android:layout_weight="2"
                     android:drawableEnd="@drawable/ic_menu_manage"
                     android:drawableRight="@drawable/ic_menu_manage"
                     android:gravity="center"
-                    android:layout_margin="@dimen/margin_5"
-                    android:text="get recommended movies " />
+                    android:text="get recommended TV Series " />
 
                 <TextView
-                    android:id="@+id/tv_moviecrew"
+                    android:id="@+id/tv_crewTV"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:layout_margin="@dimen/margin_5"
                     android:layout_weight="2"
                     android:drawableEnd="@drawable/ic_menu_manage"
                     android:drawableRight="@drawable/ic_menu_manage"
                     android:gravity="center"
-                    android:layout_margin="@dimen/margin_5"
                     android:text="get cast n crew" />
+
+
+
+                <ExpandableListView
+                    android:id="@+id/expandable_production"
+                    android:layout_height="match_parent"
+                    android:layout_margin="@dimen/margin_5"
+                    android:gravity="center"
+                    android:divider="#f00"
+                    android:dividerHeight="1dp"
+                    android:layout_width="match_parent"/>
+
+                <TextView
+                    android:id="@+id/tv_genreTV"
+                    android:layout_width="fill_parent"
+                    android:layout_height="fill_parent"
+                    android:layout_margin="@dimen/margin_5"
+                    android:layout_weight="2"
+                    android:drawableEnd="@drawable/ic_menu_manage"
+                    android:drawableRight="@drawable/ic_menu_manage"
+                    android:gravity="center"
+                    android:text="Genre List" />
+
+                <TextView
+                    android:id="@+id/tv_viewAllTV"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="@dimen/margin_5"
+                    android:layout_weight="2"
+                    android:drawableEnd="@drawable/ic_menu_manage"
+                    android:drawableRight="@drawable/ic_menu_manage"
+                    android:gravity="center"
+                    android:text="View All Seasons and TV" />
 
 
             </TableLayout>

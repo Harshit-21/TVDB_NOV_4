@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:layout_margin="@dimen/margin_10"
+    tools:context="com.example.harshit.tvdb.Activities.TvSeasonEpisodesActivity">
+
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/recyler_season"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
+
+
+    <FrameLayout
+        android:id="@+id/fl_tvImage"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/height_150"
+        android:layout_below="@+id/recyler_season"
+        android:layout_marginTop="@dimen/margin_10">
+
+        <TextView
+            android:id="@+id/tv_seasonNo"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="@dimen/margin_5"
+            android:padding="@dimen/padding_5"
+            android:textSize="@dimen/text_20"
+            android:layout_marginBottom="@dimen/margin_10"
+            android:layout_gravity="bottom"
+            android:textStyle="bold|italic" />
+
+        <TextView
+            android:id="@+id/tv_airDate"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="right|bottom"
+            android:layout_margin="@dimen/margin_5"
+            android:padding="@dimen/padding_5"
+            android:textSize="@dimen/text_20"
+            android:layout_marginBottom="@dimen/margin_10"
+            android:textStyle="bold|italic" />
+
+
+    </FrameLayout>
+
+
+    <ProgressBar
+        android:id="@+id/progress_seasonTv"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerInParent="true" />
+
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/recyler_episodes"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/fl_tvImage"
+        android:layout_marginTop="@dimen/margin_10"
+        android:visibility="gone" />
+
+
+</RelativeLayout>
