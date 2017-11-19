@@ -33,15 +33,16 @@ public class CrewActivity extends AppCompatActivity implements RecylerClickEvent
     private ProgressBar progress_crew;
     private RecyclerView recyler_crew;
     private CastnCrewAdapter castncrewadapter;
+    private String coming_from="";
+    private String tv_id="";
 
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_crew);
-        getDataFromBundle();
         initViews();
-        getCastnCrewDetails();
+        getDataFromBundle();
     }
 
     private void initViews() {
@@ -95,16 +96,12 @@ public class CrewActivity extends AppCompatActivity implements RecylerClickEvent
 
     private void handleData(ArrayList<Bean_CastnCrew> arr_castncrew) {
         if (arr_castncrew != null) {
-            progress_crew.setVisibility(View.GONE);
             recyler_crew.setVisibility(View.VISIBLE);
-
             castncrewadapter = new CastnCrewAdapter(arr_castncrew, getApplicationContext(), this);
             RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(getApplicationContext(), LinearLayoutManager.VERTICAL, false);
             recyler_crew.setLayoutManager(mLayoutManager);
             recyler_crew.setItemAnimator(new DefaultItemAnimator());
             recyler_crew.setAdapter(castncrewadapter);
-
-
         } else {
             progress_crew.setVisibility(View.GONE);
             AppUtil.openNonInternetActivity(this, getResources().getString(R.string.something_went_wrong));
@@ -114,8 +111,67 @@ public class CrewActivity extends AppCompatActivity implements RecylerClickEvent
 
 
     private void getDataFromBundle() {
-        movie_id = getIntent().getStringExtra("MOVIE_ID");
-        Log.d("MOVIE_ID", movie_id);
+        coming_from = getIntent().getStringExtra("COMING_FROM");
+        if(coming_from!=null && coming_from.equalsIgnoreCase("tv"))
+        {
+            tv_id = getIntent().getStringExtra("TV_ID");
+            Log.d("TV_ID", tv_id);
+            getCastnCrewDetailsTV();
+
+        }else
+        {
+            movie_id = getIntent().getStringExtra("MOVIE_ID");
+            Log.d("MOVIE_ID", movie_id);
+            getCastnCrewDetails();
+
+        }
+
+    }
+
+    private void getCastnCrewDetailsTV() {
+        if (tv_id != null) {
+            if (AppUtil.isNetworkAvailable(this)) {
+
+                progress_crew.setVisibility(View.VISIBLE);
+                MyApplication application = (MyApplication) getApplication();
+                if (application != null) {
+                    Call<Bean_CastnCrewResponse> call = application.getRetrofitInstance().getCreditsTV(Integer.parseInt(tv_id), AppConstant.API_KEY,AppConstant.ENG_LANGUAGE);
+                    call.enqueue(new Callback<Bean_CastnCrewResponse>() {
+                        @Override
+                        public void onResponse(@NonNull Call<Bean_CastnCrewResponse> call, @NonNull Response<Bean_CastnCrewResponse> response) {
+
+                            progress_crew.setVisibility(View.GONE);
+
+                            if (!response.message().isEmpty()) {
+                                ArrayList<Bean_CastnCrew> arr_cast = response.body().getCast();
+                                ArrayList<Bean_CastnCrew> arr_crew = response.body().getCrew();
+                                ArrayList<Bean_CastnCrew> arr_castncrew = new ArrayList<>();
+                                arr_castncrew.addAll(arr_cast);
+                                arr_castncrew.addAll(arr_crew);
+                                handleData(arr_castncrew);
+                            }
+                        }
+
+                        @Override
+                        public void onFailure(Call<Bean_CastnCrewResponse> call, Throwable t) {
+                            // Log error here since request failed
+                            Log.e("ERROR", t.toString());
+                            progress_crew.setVisibility(View.GONE);
+                            AppUtil.openNonInternetActivity(getApplicationContext(), getResources().getString(R.string.something_went_wrong));
+                            finish();
+                        }
+                    });
+
+
+                }
+            } else {
+                AppUtil.openNonInternetActivity(this, getResources().getString(R.string.no_internet));
+                finish();
+            }
+        } else {
+            AppUtil.openNonInternetActivity(this, getResources().getString(R.string.something_went_wrong));
+            finish();
+        }
     }
 
     @Override

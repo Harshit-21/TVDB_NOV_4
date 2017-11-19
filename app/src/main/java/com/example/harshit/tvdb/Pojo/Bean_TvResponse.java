@@ -22,7 +22,7 @@ public class Bean_TvResponse {
     private Integer totalPages;
     @SerializedName("results")
     @Expose
-    private ArrayList<Bean_TvDetails> results = null;
+    private ArrayList<Bean_TvList> results = null;
 
     public Integer getPage() {
         return page;
@@ -48,11 +48,11 @@ public class Bean_TvResponse {
         this.totalPages = totalPages;
     }
 
-    public ArrayList<Bean_TvDetails> getResults() {
+    public ArrayList<Bean_TvList> getResults() {
         return results;
     }
 
-    public void setResults(ArrayList<Bean_TvDetails> results) {
+    public void setResults(ArrayList<Bean_TvList> results) {
         this.results = results;
     }
 

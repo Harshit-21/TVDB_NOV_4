@@ -13,4 +13,10 @@ public class AppConstant {
 
     public static final String ISO_FILE = "ISO_FILE";
 
+    // these are the constants used for movies and tv
+    public static final String TV_POPULAR="popular";
+    public static final String TV_TOP_RATED="top_rated";
+    public static final String TV_AIRING="airing_today";
+    public static final String TV_ON_THE_AIR="on_the_air";
+
 }

@@ -8,6 +8,9 @@ import com.example.harshit.tvdb.Pojo.Bean_MovieImages;
 import com.example.harshit.tvdb.Pojo.Bean_MovieResponse;
 import com.example.harshit.tvdb.Pojo.Bean_ReleaseDateResponse;
 import com.example.harshit.tvdb.Pojo.Bean_TranslationsResponse;
+import com.example.harshit.tvdb.Pojo.Bean_TvDetails;
+import com.example.harshit.tvdb.Pojo.Bean_TvResponse;
+import com.example.harshit.tvdb.Pojo.Bean_TvSeasonResponse;
 
 import retrofit2.Call;
 import retrofit2.http.GET;
@@ -88,19 +91,43 @@ public interface ApiInterface {
 
 
     @GET("tv/top_rated")
-    Call<Bean_MovieResponse> getTopRatedTv(@Query("api_key") String apiKey, @Query("language") String language);
+    Call<Bean_TvResponse> getTopRatedTv(@Query("api_key") String apiKey, @Query("language") String language, @Query("page") int page);
 
     @GET("tv/popular")
-    Call<Bean_MovieResponse> getPopularTv(@Query("api_key") String apiKey, @Query("language") String language);
+    Call<Bean_TvResponse> getPopularTv(@Query("api_key") String apiKey, @Query("language") String language,@Query("page") int page);
 
 
     @GET("tv/on_the_air")
-    Call<Bean_MovieResponse> getOnTheAirTv(@Query("api_key") String apiKey, @Query("language") String language);
+    Call<Bean_TvResponse> getOnTheAirTv(@Query("api_key") String apiKey, @Query("language") String language,@Query("page") int page);
 
 
     @GET("tv/airing_today")
-    Call<Bean_MovieResponse> getAiringToday(@Query("api_key") String apiKey, @Query("language") String language);
+    Call<Bean_TvResponse> getAiringToday(@Query("api_key") String apiKey, @Query("language") String language,@Query("page") int page);
 
+
+
+//https://api.themoviedb.org/3/tv/{tv_id}?api_key=<<api_key>>&language=en-US
+
+    @GET("tv/{tv_id}")
+    Call<Bean_TvDetails> getTvDetails(@Path("tv_id") int tv_id, @Query("api_key") String apiKey, @Query("language") String language);
+
+// to get the recommended movies
+//    https://api.themoviedb.org/3/tv/{tv_id}/recommendations?api_key=<<api_key>>&language=en-US&page=1
+    @GET("tv/{tv_id}/recommendations")
+    Call<Bean_TvResponse> getRecommendedTv(@Path("tv_id") int tv_id, @Query("api_key") String apiKey, @Query("language") String language);
+
+    // this is for the cast n crew for the tv
+//https://api.themoviedb.org/3/tv/{tv_id}/credits?api_key=<<api_key>>&language=en-US
+
+    @GET("tv/{tv_id}/credits")
+    Call<Bean_CastnCrewResponse> getCreditsTV(@Path("tv_id") int tv_id, @Query("api_key") String apiKey, @Query("language") String language);
+
+    // this is used to get the season and episode details
+
+    //https://api.themoviedb.org/3/tv/{tv_id}/season/{season_number}?api_key=<<api_key>>&language=en-US
+
+    @GET("tv/{tv_id}/season/{season_number}")
+    Call<Bean_TvSeasonResponse> getTvSeasonEpisodes(@Path("tv_id") int tv_id, @Path("season_number") int season_no, @Query("api_key") String apiKey, @Query("language") String language);
 
 
 

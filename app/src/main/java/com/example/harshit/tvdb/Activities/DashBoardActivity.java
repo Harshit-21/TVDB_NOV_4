@@ -1,18 +1,11 @@
 package com.example.harshit.tvdb.Activities;
 
-import android.annotation.TargetApi;
-import android.app.ActivityOptions;
 import android.content.Intent;
 import android.graphics.Color;
-import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
-import android.support.annotation.NonNull;
-import android.support.v4.app.ActivityOptionsCompat;
 import android.support.v4.view.ViewPager;
-import android.support.v7.widget.CardView;
 import android.text.Html;
-import android.util.Log;
 import android.view.View;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
@@ -27,25 +20,17 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.harshit.tvdb.Adapters.SliderPagerAdapter;
-import com.example.harshit.tvdb.Application.MyApplication;
 import com.example.harshit.tvdb.Interfaces.SliderClick;
 import com.example.harshit.tvdb.Pojo.Bean_MovieDetails;
-import com.example.harshit.tvdb.Pojo.Bean_MovieResponse;
 import com.example.harshit.tvdb.Pojo.Bean_SliderImages;
 import com.example.harshit.tvdb.R;
-import com.example.harshit.tvdb.Utils.AppConstant;
-import com.example.harshit.tvdb.Utils.AppUtil;
 
 import java.util.ArrayList;
 import java.util.Timer;
 import java.util.TimerTask;
 
-import retrofit2.Call;
-import retrofit2.Callback;
-import retrofit2.Response;
-
 public class DashBoardActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener, View.OnClickListener, SliderClick {
-    private TextView tv_viewTv, tv_viewMovies;
+    private TextView tv_viewTv, tv_viewMovies,tv_search;
     private NavigationView navigationView;
     private DrawerLayout drawer;
     private Toolbar toolbar;
@@ -172,20 +157,22 @@ public class DashBoardActivity extends AppCompatActivity implements NavigationVi
     }
 
     private void initViews() {
-        vp_slider = (ViewPager) findViewById(R.id.vp_slider);
-        ll_dots = (LinearLayout) findViewById(R.id.ll_dots);
+        vp_slider =  findViewById(R.id.vp_slider);
+        ll_dots =  findViewById(R.id.ll_dots);
 
         tv_viewTv =  findViewById(R.id.tv_viewTv);
+        tv_search =  findViewById(R.id.tv_search);
         tv_viewMovies =findViewById(R.id.tv_viewMovies);
-        navigationView = (NavigationView) findViewById(R.id.nav_view);
-        drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
-        toolbar = (Toolbar) findViewById(R.id.toolbar);
+        navigationView =  findViewById(R.id.nav_view);
+        drawer =  findViewById(R.id.drawer_layout);
+        toolbar =  findViewById(R.id.toolbar);
 
     }
 
     private void setListners() {
         tv_viewTv.setOnClickListener(this);
         tv_viewMovies.setOnClickListener(this);
+        tv_search.setOnClickListener(this);
         navigationView.setNavigationItemSelectedListener(this);
 
     }
@@ -262,23 +249,28 @@ public class DashBoardActivity extends AppCompatActivity implements NavigationVi
                 openMoviesActivity();
                 break;
             case R.id.tv_viewTv:
-//                openTvActivity();
+                openTvActivity();
+                break;case R.id.tv_search:
+                openSearchActivity();
                 break;
         }
 
     }
 
+    private void openSearchActivity() {
+        Intent search_intent = new Intent(this, SearchActivity.class);
+        startActivity(search_intent);
+    }
+
+
     private void openTvActivity() {
-        Intent intent_tv = new Intent(this, TvActivity.class);
+        Intent intent_tv = new Intent(this, TvListActivity.class);
         startActivity(intent_tv);
     }
 
-    @TargetApi(Build.VERSION_CODES.LOLLIPOP)
     private void openMoviesActivity() {
         Intent intent_movies = new Intent(this, MoviesListActivity.class);
-        // herew are the 3 params     context other is view and last is the transition name
-//        ActivityOptionsCompat options = ActivityOptionsCompat.makeSceneTransitionAnimation(this, (View)ivProfile, "profile");
-        startActivity(intent_movies, ActivityOptions.makeSceneTransitionAnimation(this).toBundle());
+        startActivity(intent_movies);
     }
 
     @Override
