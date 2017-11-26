@@ -24,6 +24,7 @@ import com.example.harshit.tvdb.Utils.AppUtil;
 
 import java.util.ArrayList;
 
+import okhttp3.internal.Util;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -42,6 +43,7 @@ public class CrewActivity extends AppCompatActivity implements RecylerClickEvent
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_crew);
         initViews();
+        AppUtil.setActionBar(this);
         getDataFromBundle();
     }
 

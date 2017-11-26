@@ -1,11 +1,15 @@
 package com.example.harshit.tvdb.Activities;
 
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.v4.view.ViewPager;
 import android.text.Html;
+import android.util.Base64;
+import android.util.Log;
 import android.view.View;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
@@ -15,22 +19,32 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.ProgressBar;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.example.harshit.tvdb.Adapters.SliderPagerAdapter;
 import com.example.harshit.tvdb.Interfaces.SliderClick;
-import com.example.harshit.tvdb.Pojo.Bean_MovieDetails;
 import com.example.harshit.tvdb.Pojo.Bean_SliderImages;
+import com.example.harshit.tvdb.Pojo.Bean_UserInfo;
 import com.example.harshit.tvdb.R;
+import com.example.harshit.tvdb.Utils.AppUtil;
+import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
+import com.google.firebase.storage.FirebaseStorage;
+import com.google.firebase.storage.StorageReference;
 
 import java.util.ArrayList;
 import java.util.Timer;
 import java.util.TimerTask;
 
 public class DashBoardActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener, View.OnClickListener, SliderClick {
-    private TextView tv_viewTv, tv_viewMovies,tv_search;
+    private TextView tv_viewTv, tv_viewMovies, tv_search;
     private NavigationView navigationView;
     private DrawerLayout drawer;
     private Toolbar toolbar;
@@ -41,13 +55,28 @@ public class DashBoardActivity extends AppCompatActivity implements NavigationVi
     ArrayList<Bean_SliderImages> slider_image_list;
     private TextView[] dots;
     int page_position = 0;
+    private ImageView user_image;
+    private TextView username;
+    private TextView tv_userEmail;
+
+    private DatabaseReference mDatabase;
+    private String user_token;
+    private ProgressBar progress_userInfo;
+    private FirebaseStorage storage;
+    private StorageReference storageRef;
+    final long ONE_MEGABYTE = 1024 * 1024 *5;
+
 
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_dash_board);
+        getDataFromBundle();
         initViews();
+        mDatabase = FirebaseDatabase.getInstance().getReference("USER");
+         storage = FirebaseStorage.getInstance();
+         storageRef = storage.getReferenceFromUrl(getString(R.string.firebase_storage));
         setSupportActionBar(toolbar);
         setDrawer();
         setListners();
@@ -57,6 +86,10 @@ public class DashBoardActivity extends AppCompatActivity implements NavigationVi
             }
         };
         new Handler().postDelayed(r, 100);
+    }
+
+    private void getDataFromBundle() {
+        user_token = getIntent().getStringExtra("USER_TOKEN");
 
     }
 
@@ -65,6 +98,64 @@ public class DashBoardActivity extends AppCompatActivity implements NavigationVi
         setSliderAdapter();
         addBottomDots(0);
         autoScrollSlider();
+    }
+
+    private void getTheUserInfo() {
+
+        if (AppUtil.isNetworkAvailable(this) && user_token != null) {
+            progress_userInfo.setVisibility(View.VISIBLE);
+            mDatabase.child(user_token).addValueEventListener(new ValueEventListener() {
+                @Override
+                public void onDataChange(DataSnapshot dataSnapshot) {
+                    // this is to get the arraylisst
+//                GenericTypeIndicator<ArrayList<Item>> t = new GenericTypeIndicator<ArrayList<Item>>() {};
+//                ArrayList<Item> yourStringArray = snapshot.getValue(t);
+//                Toast.makeText(getContext(),yourStringArray.get(0).getName(),Toast.LENGTH_LONG).show();
+                    Bean_UserInfo user = dataSnapshot.getValue(Bean_UserInfo.class);
+                    // here we get the complete info of user
+                    setValueOfuser(user);
+                    progress_userInfo.setVisibility(View.GONE);
+
+                }
+
+                @Override
+                public void onCancelled(DatabaseError error) {
+                    // Failed to read value
+                    progress_userInfo.setVisibility(View.GONE);
+
+                    Log.w("DETAILS", "Failed to read value.", error.toException());
+                    AppUtil.openNonInternetActivity(DashBoardActivity.this, getResources().getString(R.string.something_went_wrong));
+                    finish();
+                }
+            });
+        } else {
+            progress_userInfo.setVisibility(View.GONE);
+            AppUtil.openNonInternetActivity(DashBoardActivity.this, getResources().getString(R.string.something_went_wrong));
+            finish();
+        }
+    }
+
+    private void setValueOfuser(Bean_UserInfo user) {
+        if (user != null) {
+            username.setText(user.getFname() + " " + user.getLname());
+            tv_userEmail.setText(user.getEmail());
+// now we need to download from firebase storage
+            //download file as a byte array
+            storageRef.child(user_token).getBytes(ONE_MEGABYTE).addOnSuccessListener(new OnSuccessListener<byte[]>() {
+                @Override
+                public void onSuccess(byte[] bytes) {
+                    Bitmap bitmap = BitmapFactory.decodeByteArray(bytes, 0, bytes.length);
+                    user_image.setImageBitmap(bitmap);
+                }
+            });
+        }
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        // getTheuserInfo
+        getTheUserInfo();
     }
 
     private void getSliderImages() {
@@ -157,15 +248,22 @@ public class DashBoardActivity extends AppCompatActivity implements NavigationVi
     }
 
     private void initViews() {
-        vp_slider =  findViewById(R.id.vp_slider);
-        ll_dots =  findViewById(R.id.ll_dots);
+        vp_slider = findViewById(R.id.vp_slider);
+        ll_dots = findViewById(R.id.ll_dots);
+        tv_viewTv = findViewById(R.id.tv_viewTv);
+        tv_search = findViewById(R.id.tv_search);
+        tv_viewMovies = findViewById(R.id.tv_viewMovies);
+        tv_userEmail = findViewById(R.id.tv_userEmail);
+        navigationView = findViewById(R.id.nav_view);
+        drawer = findViewById(R.id.drawer_layout);
+        toolbar = findViewById(R.id.toolbar);
+        toolbar.setTitle(getString(R.string.title_activity_dash_board));
+        progress_userInfo = findViewById(R.id.progress_userInfo);
 
-        tv_viewTv =  findViewById(R.id.tv_viewTv);
-        tv_search =  findViewById(R.id.tv_search);
-        tv_viewMovies =findViewById(R.id.tv_viewMovies);
-        navigationView =  findViewById(R.id.nav_view);
-        drawer =  findViewById(R.id.drawer_layout);
-        toolbar =  findViewById(R.id.toolbar);
+        View headerView = navigationView.getHeaderView(0);
+        user_image = headerView.findViewById(R.id.user_image);
+        username = headerView.findViewById(R.id.tv_userName);
+
 
     }
 
@@ -177,12 +275,6 @@ public class DashBoardActivity extends AppCompatActivity implements NavigationVi
 
     }
 
-
-    private void handleResult(ArrayList<Bean_MovieDetails> arr_movies) {
-        if (arr_movies != null) {
-            Toast.makeText(this, arr_movies.size() + "", Toast.LENGTH_LONG).show();
-        }
-    }
 
     @Override
     public void onBackPressed() {
@@ -197,7 +289,7 @@ public class DashBoardActivity extends AppCompatActivity implements NavigationVi
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.dash_board, menu);
+//        getMenuInflater().inflate(R.menu.dash_board, menu);
         return true;
     }
 
@@ -230,13 +322,9 @@ public class DashBoardActivity extends AppCompatActivity implements NavigationVi
 
         } else if (id == R.id.nav_manage) {
 
-        } else if (id == R.id.nav_share) {
-
-        } else if (id == R.id.nav_send) {
-
         }
 
-        DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
+        DrawerLayout drawer = findViewById(R.id.drawer_layout);
         drawer.closeDrawer(GravityCompat.START);
         return true;
     }
@@ -250,7 +338,8 @@ public class DashBoardActivity extends AppCompatActivity implements NavigationVi
                 break;
             case R.id.tv_viewTv:
                 openTvActivity();
-                break;case R.id.tv_search:
+                break;
+            case R.id.tv_search:
                 openSearchActivity();
                 break;
         }

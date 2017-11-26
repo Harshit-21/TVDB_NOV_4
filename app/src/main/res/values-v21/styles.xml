@@ -11,19 +11,26 @@
         <!-- specify enter and exit transitions -->
         <!-- options are: explode, slide, fade -->
         <item name="android:windowEnterTransition" tools:ignore="NewApi">
-            @transition/change_image_transform
+            @transition/activity_enter
         </item>
         <item name="android:windowExitTransition" tools:targetApi="lollipop">
-            @transition/change_image_transform
+            @transition/activity_exit
         </item>
 
-        <!-- specify shared element transitions -->
-        <item name="android:windowSharedElementEnterTransition">
-            @transition/change_image_transform
-        </item>
-        <item name="android:windowSharedElementExitTransition">
-            @transition/change_image_transform
-        </item>
+        <item name="android:windowReenterTransition">@transition/activity_enter</item>
+        <item name="android:windowReturnTransition">@transition/activity_exit</item>
+        <item name="android:windowAllowEnterTransitionOverlap">true</item>
+        <!-- enable overlap of transitions -->
+        <item name="android:windowAllowEnterTransitionOverlap">true</item>
+        <item name="android:windowAllowReturnTransitionOverlap">true</item>
+
+        <!--&lt;!&ndash; specify shared element transitions &ndash;&gt;-->
+        <!--<item name="android:windowSharedElementEnterTransition">-->
+            <!--@transition/change_image_transform-->
+        <!--</item>-->
+        <!--<item name="android:windowSharedElementExitTransition">-->
+            <!--@transition/change_image_transform-->
+        <!--</item>-->
 
     </style>
 </resources>

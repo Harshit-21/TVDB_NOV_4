@@ -51,6 +51,8 @@ public class TvSeasonEpisodesActivity extends AppCompatActivity implements Recyl
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_tv_season_episodes);
+        AppUtil.setActionBar(this);
+
         getDataFromBundle();
         initViews();
         getNoOfSeasonsNumber();

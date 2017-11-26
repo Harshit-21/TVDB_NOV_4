@@ -20,6 +20,28 @@
         android:layout_gravity="start"
         android:fitsSystemWindows="true"
         app:headerLayout="@layout/nav_header_dash_board"
-        app:menu="@menu/activity_dash_board_drawer" />
+        app:menu="@menu/activity_dash_board_drawer">
+
+
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="bottom"
+            android:text="Logout"
+            android:drawableLeft="@drawable/logout_icon"
+            android:drawablePadding="@dimen/padding_10"
+            android:padding="@dimen/padding_10"
+            android:layout_marginBottom="@dimen/margin_15"
+            android:textSize="@dimen/text_20"
+            android:textStyle="bold|italic"
+            android:textColor="@color/black"
+            android:gravity="center_horizontal"/>
+
+
+
+
+
+    </android.support.design.widget.NavigationView>
 
 </android.support.v4.widget.DrawerLayout>

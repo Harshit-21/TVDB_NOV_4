@@ -68,6 +68,8 @@ public class TvListActivity extends AppCompatActivity implements View.OnClickLis
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_tv);
+        AppUtil.setActionBar(this);
+
         initViews();
         setListners();
         getSliderImages();

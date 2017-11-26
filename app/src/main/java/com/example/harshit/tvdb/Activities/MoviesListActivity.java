@@ -69,6 +69,7 @@ public class MoviesListActivity extends AppCompatActivity implements RecylerClic
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_movies);
         // method for initialisation
+        AppUtil.setActionBar(this);
         initViews();
         setListners();
         getSliderImages();

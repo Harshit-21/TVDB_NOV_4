@@ -1,0 +1,55 @@
+{
+  "project_info": {
+    "project_number": "231895381805",
+    "firebase_url": "https://tvdb-f388b.firebaseio.com",
+    "project_id": "tvdb-f388b",
+    "storage_bucket": "tvdb-f388b.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:231895381805:android:5c18adabcfacd06c",
+        "android_client_info": {
+          "package_name": "com.example.harshit.tvdb"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "231895381805-q7o6m4i81s80le6b8jjb54frrha490r5.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.harshit.tvdb",
+            "certificate_hash": "701571e9fe6b4e16401ba6799c83d1006ee98a33"
+          }
+        },
+        {
+          "client_id": "231895381805-au3buoptficuhhrj1bp7at6q2ojul0jj.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDGc1z0afaR--MbGidUNhuWmJwuj0Wlwm4"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 2,
+          "other_platform_oauth_client": [
+            {
+              "client_id": "231895381805-au3buoptficuhhrj1bp7at6q2ojul0jj.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

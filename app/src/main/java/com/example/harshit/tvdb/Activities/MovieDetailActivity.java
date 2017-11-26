@@ -1,5 +1,7 @@
 package com.example.harshit.tvdb.Activities;
 
+import android.animation.ObjectAnimator;
+import android.animation.ValueAnimator;
 import android.content.ComponentName;
 import android.content.Intent;
 import android.content.ServiceConnection;
@@ -16,7 +18,9 @@ import android.support.v7.widget.RecyclerView;
 import android.text.Html;
 import android.text.TextUtils;
 import android.util.Log;
+import android.view.MenuItem;
 import android.view.View;
+import android.view.animation.AccelerateDecelerateInterpolator;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -46,6 +50,8 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
+import static android.view.animation.Animation.INFINITE;
+
 public class MovieDetailActivity extends AppCompatActivity implements View.OnClickListener {
     Bean_MovieDetails bean_movieDetails;
     private CardView card_movieDetails;
@@ -67,12 +73,23 @@ public class MovieDetailActivity extends AppCompatActivity implements View.OnCli
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_movie_detail);
         getDataFromBundle();
+        AppUtil.setActionBar(this);
         initViews();
         setListners();
         // as the retrofit is woring in the background so we can use the async way to do this
         getTransaltions();
         getMovieDetails();
         getMovieImages();
+        animateCard();
+    }
+
+    private void animateCard() {
+        ObjectAnimator card_y = ObjectAnimator.ofFloat(card_movieDetails, View.TRANSLATION_Y, 50);
+        card_y.setDuration(2500);
+        card_y.setRepeatMode(ValueAnimator.REVERSE);
+        card_y.setRepeatCount(ValueAnimator.INFINITE);
+        card_y.setInterpolator(new AccelerateDecelerateInterpolator());
+        card_y.start();
     }
 
     private void handleIsoView() {
@@ -312,23 +329,23 @@ public class MovieDetailActivity extends AppCompatActivity implements View.OnCli
     }
 
     private void initViews() {
-        tv_movietitle = (TextView) findViewById(R.id.tv_movietitle);
-        tv_moviepopularity = (TextView) findViewById(R.id.tv_moviepopularity);
-        tv_moviereleasedate = (TextView) findViewById(R.id.tv_moviereleasedate);
-        tv_moviestatus = (TextView) findViewById(R.id.tv_moviestatus);
-        tv_moviebudget = (TextView) findViewById(R.id.tv_moviebudget);
-        tv_movieVideos = (TextView) findViewById(R.id.tv_movieVideos);
-        tv_recommendedmovies = (TextView) findViewById(R.id.tv_recommendedmovies);
-        tv_moviereleasedateiso = (TextView) findViewById(R.id.tv_moviereleasedateiso);
-        tv_moviecrew = (TextView) findViewById(R.id.tv_moviecrew);
-        tv_moviealternativeTitles = (TextView) findViewById(R.id.tv_moviealternativeTitles);
-        tv_movierevenue = (TextView) findViewById(R.id.tv_movierevenue);
-        tv_movieruntime = (TextView) findViewById(R.id.tv_movieruntime);
-        img_posterimage = (ImageView) findViewById(R.id.img_posterimage);
-        card_movieDetails = (CardView) findViewById(R.id.card_movieDetails);
-        vp_slider = (ViewPager) findViewById(R.id.vp_slider);
-        ll_dots = (LinearLayout) findViewById(R.id.ll_dots);
-        fl_container = (FrameLayout) findViewById(R.id.fl_container);
+        tv_movietitle = findViewById(R.id.tv_movietitle);
+        tv_moviepopularity = findViewById(R.id.tv_moviepopularity);
+        tv_moviereleasedate = findViewById(R.id.tv_moviereleasedate);
+        tv_moviestatus = findViewById(R.id.tv_moviestatus);
+        tv_moviebudget = findViewById(R.id.tv_moviebudget);
+        tv_movieVideos = findViewById(R.id.tv_movieVideos);
+        tv_recommendedmovies = findViewById(R.id.tv_recommendedmovies);
+        tv_moviereleasedateiso = findViewById(R.id.tv_moviereleasedateiso);
+        tv_moviecrew = findViewById(R.id.tv_moviecrew);
+        tv_moviealternativeTitles = findViewById(R.id.tv_moviealternativeTitles);
+        tv_movierevenue = findViewById(R.id.tv_movierevenue);
+        tv_movieruntime = findViewById(R.id.tv_movieruntime);
+        img_posterimage = findViewById(R.id.img_posterimage);
+        card_movieDetails = findViewById(R.id.card_movieDetails);
+        vp_slider = findViewById(R.id.vp_slider);
+        ll_dots = findViewById(R.id.ll_dots);
+        fl_container = findViewById(R.id.fl_container);
         progress_movieDetail = findViewById(R.id.progress_movieDetail);
     }
 
@@ -359,6 +376,19 @@ public class MovieDetailActivity extends AppCompatActivity implements View.OnCli
 //                AppUtil.showToast(this, "coming soon");
                 break;
         }
+    }
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+
+        switch (item.getItemId()) {
+            case android.R.id.home:
+                super.onBackPressed();
+                return true;
+            default:
+                return super.onOptionsItemSelected(item);
+        }
+
+
     }
 
     private void openReleaseDateFragment() {

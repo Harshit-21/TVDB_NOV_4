@@ -1,0 +1,17 @@
+<transitionSet xmlns:android="http://schemas.android.com/apk/res/android"
+    android:transitionOrdering="together">
+
+    <!--<explode-->
+    <!--android:interpolator="@android:interpolator/anticipate"-->
+    <!--/>-->
+    <!--<fade android:interpolator="@android:interpolator/anticipate" />-->
+
+    <!--<explode/>-->
+    <!--<slide/>-->
+    <!--<fade/>-->
+
+    <fade android:fadingMode="fade_out" />
+    <changeBounds />
+    <fade android:fadingMode="fade_in" />
+
+</transitionSet>

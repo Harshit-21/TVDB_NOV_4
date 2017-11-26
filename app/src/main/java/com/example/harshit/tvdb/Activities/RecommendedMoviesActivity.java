@@ -47,6 +47,8 @@ public class RecommendedMoviesActivity extends AppCompatActivity implements Recy
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_recommended_movies);
+        AppUtil.setActionBar(this);
+
         initViews();
         getDataFromBundle();
     }

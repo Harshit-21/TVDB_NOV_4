@@ -1,12 +1,18 @@
 package com.example.harshit.tvdb.Activities;
 
+import android.animation.ObjectAnimator;
+import android.animation.ValueAnimator;
 import android.content.Intent;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.widget.CardView;
 import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
+import android.view.animation.AccelerateDecelerateInterpolator;
+import android.view.animation.BounceInterpolator;
+import android.view.animation.LinearInterpolator;
 import android.widget.ExpandableListView;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
@@ -29,6 +35,8 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
+import static android.view.animation.Animation.INFINITE;
+
 public class TvDetailActivity extends AppCompatActivity implements View.OnClickListener {
 
     private String tv_id = "";
@@ -38,6 +46,7 @@ public class TvDetailActivity extends AppCompatActivity implements View.OnClickL
     private ExpandableListView expandable_production;
     private ProgressBar progress_tvDetail;
     private Production_Adapter production_adapter;
+    private CardView card_TvDetails;
     int no_of_seasons;
 
 
@@ -45,10 +54,21 @@ public class TvDetailActivity extends AppCompatActivity implements View.OnClickL
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_tv_detail);
+        AppUtil.setActionBar(this);
         getDataFromBundle();
         initViews();
         setListners();
         getTvDetails();
+        animateCard();
+    }
+
+    private void animateCard() {
+        ObjectAnimator card_y = ObjectAnimator.ofFloat(card_TvDetails, View.TRANSLATION_Y, 50);
+        card_y.setDuration(2500);
+        card_y.setRepeatMode(ValueAnimator.REVERSE);
+        card_y.setRepeatCount(ValueAnimator.INFINITE);
+        card_y.setInterpolator(new AccelerateDecelerateInterpolator());
+        card_y.start();
     }
 
     private void getTvDetails() {
@@ -100,7 +120,6 @@ public class TvDetailActivity extends AppCompatActivity implements View.OnClickL
 
             if (bean_tvDetails.getBackdropPath() != null) {
                 Picasso.with(this).load(AppConstant.IMG_PATH + bean_tvDetails.getBackdropPath()).error(this.getResources().getDrawable(R.drawable.something_went_wrong)).into(img_backdropImage);
-
             } else {
                 img_backdropImage.setVisibility(View.GONE);
             }
@@ -219,6 +238,7 @@ public class TvDetailActivity extends AppCompatActivity implements View.OnClickL
         img_posterimage = findViewById(R.id.img_posterimage);
         progress_tvDetail = findViewById(R.id.progress_tvDetail);
         img_backdropImage = findViewById(R.id.img_backdropImage);
+        card_TvDetails = findViewById(R.id.card_TvDetails);
 
         tv_titleTV = findViewById(R.id.tv_titleTV);
         tv_DescTV = findViewById(R.id.tv_DescTV);
@@ -270,7 +290,7 @@ public class TvDetailActivity extends AppCompatActivity implements View.OnClickL
     private void openSeasonEpisodeActivity() {
         if (no_of_seasons > 0) {
             Intent season_intent = new Intent(this, TvSeasonEpisodesActivity.class);
-            season_intent.putExtra("NO_OF_SEASONS", no_of_seasons+"");
+            season_intent.putExtra("NO_OF_SEASONS", no_of_seasons + "");
             season_intent.putExtra("TV_ID", tv_id);
             startActivity(season_intent);
         } else {

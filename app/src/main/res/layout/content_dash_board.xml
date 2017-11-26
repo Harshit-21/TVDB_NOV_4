@@ -9,6 +9,14 @@
     tools:context="com.example.harshit.tvdb.Activities.DashBoardActivity"
     tools:showIn="@layout/app_bar_dash_board">
 
+    <ProgressBar
+        android:id="@+id/progress_userInfo"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerInParent="true"
+        android:visibility="gone" />
+
+
     <RelativeLayout
         android:id="@+id/rl_slider"
         android:layout_width="match_parent"
@@ -39,6 +47,15 @@
         android:layout_margin="@dimen/margin_10"
         android:orientation="vertical">
 
+
+        <TextView
+            android:id="@+id/tv_userEmail"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+            android:textColor="@color/white"
+            android:textSize="@dimen/text_20"
+            android:textStyle="bold|italic" />
 
         <TextView
             android:id="@+id/tv_viewMovies"
