@@ -154,12 +154,13 @@ public class DashBoardActivity extends AppCompatActivity implements NavigationVi
 
     private void setValueOfuser(Bean_UserInfo user) {
         if (user != null) {
-            username.setText(user.getFname() + " " + user.getLname());
+            username.setText(user.getUsername());
             tv_userEmail.setText(user.getEmail());
 // now we need to download from firebase storage
             //download file as a byte array
             progress_userDashBoard.setVisibility(View.VISIBLE);
-            final String[] images_name = new String[]{"COVER", "Profile"};
+//            final String[] images_name = new String[]{"COVER", "Profile"};
+            final String[] images_name = new String[]{"Profile"};
 
 
             for (int i = 0; i < images_name.length; i++) {
@@ -174,18 +175,20 @@ public class DashBoardActivity extends AppCompatActivity implements NavigationVi
 
                         Bitmap bitmap = BitmapFactory.decodeByteArray(bytes, 0, bytes.length);
 
-                        if (images_name[finalI].equalsIgnoreCase("COVER")) {
+//                        if (images_name[finalI].equalsIgnoreCase("COVER")) {
                             BitmapDrawable background = new BitmapDrawable(bitmap);
                             ll_nav.setBackgroundDrawable(background);
-                        } else {
+                            ll_nav.setAlpha(.5f);
+//                        } else {
                             user_image.setImageBitmap(bitmap);
-                        }
+                        progress_userDashBoard.setVisibility(View.GONE);
+
+//                        }
 //                    Bitmap bmImg = BitmapFactory.decodeStream(is);
 
                     }
                 });
             }
-            progress_userDashBoard.setVisibility(View.GONE);
 
         }
     }

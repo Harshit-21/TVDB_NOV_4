@@ -37,4 +37,6 @@
     <string name="update_user">Update Info</string>
     <string name="movie_list">Movie List</string>
     <string name="firebase_storage">gs://tvdb-f388b.appspot.com/</string>
+    <string name="watch_videos">View Videos</string>
+    <string name="release_date">Release Dates</string>
 </resources>

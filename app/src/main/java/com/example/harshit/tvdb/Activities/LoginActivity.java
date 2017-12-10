@@ -202,11 +202,13 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.btn_login:
+                AppUtil.hideKeypad(this);
                 if (getDataOfLayout()) {
                     loginWithFirebase();
                 }
                 break;
             case R.id.btn_register:
+                AppUtil.hideKeypad(this);
                 btn_login.setVisibility(View.GONE);
                 btn_register.setVisibility(View.VISIBLE);
                 login_button.setVisibility(View.GONE);
@@ -251,7 +253,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
                         @Override
                         public void onComplete(@NonNull Task<AuthResult> task) {
                             //checking if success
-                            progress.setVisibility(View.VISIBLE);
+                            progress.setVisibility(View.GONE);
 
                             if (task.isSuccessful()) {
                                 //display some message here
@@ -276,6 +278,8 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
 
 
                             } else {
+                                progress.setVisibility(View.GONE);
+
                                 //display some message here
                                 try {
                                     throw task.getException();

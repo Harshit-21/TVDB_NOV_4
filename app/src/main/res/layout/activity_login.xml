@@ -18,7 +18,6 @@
             android:id="@+id/progress"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_centerInParent="true"
             android:visibility="gone" />
 
     </FrameLayout>
@@ -40,9 +39,9 @@
             android:layout_gravity="center_horizontal"
             android:layout_marginTop="@dimen/margin_20"
             android:elevation="@dimen/elevation_10"
-            android:shadowColor="@color/black"
+            android:shadowColor="@color/white"
             android:text="Welcome To TVDB"
-            android:textColor="@color/black"
+            android:textColor="@color/white"
             android:textSize="@dimen/text_30"
             android:textStyle="bold|italic" />
 
@@ -124,19 +123,21 @@
         <com.google.android.gms.common.SignInButton
             android:id="@+id/sign_in_button"
             android:layout_width="match_parent"
-            android:layout_marginTop="@dimen/margin_10"
-            android:layout_height="@dimen/height_50" />
+            android:layout_height="@dimen/height_50"
+
+            android:layout_margin="@dimen/margin_20" />
 
 
-        <com.facebook.login.widget.LoginButton xmlns:facebook="http://schemas.android.com/apk/res-auto"
+        <com.facebook.login.widget.LoginButton
+            xmlns:facebook="http://schemas.android.com/apk/res-auto"
             android:id="@+id/login_button"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:paddingTop="@dimen/padding_10"
-            android:layout_marginTop="@dimen/margin_10"
-            android:layout_marginRight="@dimen/margin_5"
             android:layout_marginLeft="@dimen/margin_5"
+            android:layout_marginRight="@dimen/margin_5"
+            android:layout_marginTop="@dimen/margin_10"
             android:paddingBottom="@dimen/padding_15"
+            android:paddingTop="@dimen/padding_15"
             facebook:com_facebook_login_text="Log in" />
 
 

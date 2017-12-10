@@ -6,7 +6,6 @@ import android.content.Intent;
 import android.graphics.Color;
 import android.os.Handler;
 import android.support.annotation.NonNull;
-import android.support.v4.app.FragmentTransaction;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -25,7 +24,6 @@ import android.widget.TextView;
 
 import com.example.harshit.tvdb.Adapters.SliderImageAdapter;
 import com.example.harshit.tvdb.Application.MyApplication;
-import com.example.harshit.tvdb.Fragments.AlternativeMovieFragment;
 import com.example.harshit.tvdb.Pojo.Bean_MovieDetails;
 import com.example.harshit.tvdb.Pojo.Bean_MovieImages;
 import com.example.harshit.tvdb.Pojo.Bean_Poster;
@@ -34,6 +32,7 @@ import com.example.harshit.tvdb.Pojo.Bean_TranslationsResponse;
 import com.example.harshit.tvdb.R;
 import com.example.harshit.tvdb.Utils.AppConstant;
 import com.example.harshit.tvdb.Utils.AppUtil;
+import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
 import java.util.Timer;
@@ -52,7 +51,7 @@ public class MovieDetailActivity extends AppCompatActivity implements View.OnCli
     int page_position = 0;
     private SliderImageAdapter sliderImageAdapter;
     private ImageView img_posterimage;
-    private TextView tv_moviereleasedateiso, tv_moviealternativeTitles, tv_movietitle, tv_movierevenue, tv_movieruntime, tv_moviepopularity, tv_moviereleasedate, tv_moviestatus, tv_moviebudget, tv_movieVideos, tv_recommendedmovies, tv_moviecrew;
+    private TextView tv_movieDesc,tv_moviereleasedateiso, tv_moviealternativeTitles, tv_movietitle, tv_movierevenue, tv_movieruntime, tv_moviepopularity, tv_moviereleasedate, tv_moviestatus, tv_moviebudget, tv_movieVideos, tv_recommendedmovies, tv_moviecrew;
     private FrameLayout fl_container;
     boolean mBounded;
     private ProgressBar progress_movieDetail;
@@ -293,6 +292,8 @@ public class MovieDetailActivity extends AppCompatActivity implements View.OnCli
     private void handleMovieDetailData(Bean_MovieDetails bean_movieDetails) {
         if (bean_movieDetails != null) {
             progress_movieDetail.setVisibility(View.GONE);
+            Picasso.with(this).load(AppConstant.IMG_PATH + bean_movieDetails.getPosterPath()).error(getResources().getDrawable(R.drawable.something_went_wrong)).into(img_posterimage);
+            tv_movieDesc.setText(!TextUtils.isEmpty(bean_movieDetails.getOverview())? bean_movieDetails.getOverview():"");
             tv_movietitle.setText(bean_movieDetails.getTitle() != null ? bean_movieDetails.getTitle() : "");
             tv_moviepopularity.setText(String.valueOf(bean_movieDetails.getPopularity() != null ? bean_movieDetails.getPopularity() : ""));
             tv_moviereleasedate.setText(!TextUtils.isEmpty(bean_movieDetails.getReleaseDate()) ? bean_movieDetails.getReleaseDate() : "");
@@ -321,6 +322,7 @@ public class MovieDetailActivity extends AppCompatActivity implements View.OnCli
 
     private void initViews() {
         tv_movietitle = findViewById(R.id.tv_movietitle);
+        tv_movieDesc = findViewById(R.id.tv_movieDesc);
         tv_moviepopularity = findViewById(R.id.tv_moviepopularity);
         tv_moviereleasedate = findViewById(R.id.tv_moviereleasedate);
         tv_moviestatus = findViewById(R.id.tv_moviestatus);
@@ -358,7 +360,7 @@ public class MovieDetailActivity extends AppCompatActivity implements View.OnCli
                 openCrewnCastActivity();
                 break;
             case R.id.tv_moviealternativeTitles:
-                openAlternativeMovieFragment();
+                openAlternativeTitleActivity();
 
                 break;
             case R.id.tv_moviereleasedateiso:
@@ -396,7 +398,7 @@ public class MovieDetailActivity extends AppCompatActivity implements View.OnCli
 
 
 
-    private void openAlternativeMovieFragment() {
+    private void openAlternativeTitleActivity() {
         Intent release_intent=new Intent(this, AlternativeTitleActivity.class);
         release_intent.putExtra("MOVIE_ID",bean_movieDetails.getId().toString());
         startActivity(release_intent);

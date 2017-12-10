@@ -5,6 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@drawable/login_bg"
+
     tools:context="com.example.harshit.tvdb.Activities.UpdateUserInfoActivity">
 
     <ProgressBar
@@ -18,6 +19,7 @@
         android:id="@+id/fl_image"
         android:layout_width="@dimen/width_100"
         android:layout_height="@dimen/height_100"
+        android:layout_marginTop="@dimen/margin_30"
         android:layout_centerHorizontal="true">
 
         <de.hdodenhof.circleimageview.CircleImageView
@@ -25,7 +27,6 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_centerHorizontal="true"
-            android:layout_marginTop="@dimen/margin_10"
             android:scaleType="centerCrop"
             android:src="@drawable/camera_ico"
             app:civ_border_color="@color/white"
@@ -148,7 +149,6 @@
                 android:drawableStart="@drawable/user"
                 android:gravity="center"
                 android:hint="Enter Email"
-                android:padding="@dimen/padding_10"
                 android:paddingLeft="@dimen/padding_20"
                 android:singleLine="true"
                 android:textColor="@color/white"

@@ -75,9 +75,12 @@
         <activity
             android:name=".Activities.DashBoardActivity"
             android:theme="@style/AppTheme.NoActionBar" />
-        <activity android:name=".Activities.YoutubeActivity" />
-        <activity android:name=".Activities.ReleaseDateActivity" />
-        <activity android:name=".Activities.AlternativeTitleActivity"></activity>
+        <activity android:name=".Activities.YoutubeActivity"
+         />
+        <activity android:name=".Activities.ReleaseDateActivity"
+            android:label="@string/release_date" />
+        <activity android:name=".Activities.AlternativeTitleActivity"
+            android:label="@string/tv_details" ></activity>
     </application>
 
 </manifest>

@@ -1,5 +1,6 @@
 package com.example.harshit.tvdb.Activities;
 
+import android.os.AsyncTask;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -31,7 +32,6 @@ public class ReleaseDateActivity extends AppCompatActivity {
     private RecyclerView recyler_releaseDate;
     private ProgressBar progress_release;
     private ReleaseDateAdapter releaseAdapter;
-
 
 
     @Override
@@ -72,7 +72,7 @@ public class ReleaseDateActivity extends AppCompatActivity {
     private void getReleaseDateFromServer() {
         if (movie_id != null) {
             if (AppUtil.isNetworkAvailable(this)) {
-                MyApplication application = (MyApplication)getApplication();
+                MyApplication application = (MyApplication) getApplication();
                 if (application != null) {
                     progress_release.setVisibility(View.VISIBLE);
                     Call<Bean_ReleaseDateResponse> call = application.getRetrofitInstance().getReleaseDates(Integer.parseInt(movie_id), AppConstant.API_KEY);
@@ -111,16 +111,19 @@ public class ReleaseDateActivity extends AppCompatActivity {
 
     private void makeHashmap(final ArrayList<Bean_Release> arr_release) {
         if (arr_release != null) {
-            progress_release.setVisibility(View.GONE);
             recyler_releaseDate.setVisibility(View.VISIBLE);
             releaseAdapter = new ReleaseDateAdapter(arr_release, this);
             RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false);
             recyler_releaseDate.setLayoutManager(mLayoutManager);
             recyler_releaseDate.setItemAnimator(new DefaultItemAnimator());
             recyler_releaseDate.setAdapter(releaseAdapter);
+            progress_release.setVisibility(View.GONE);
+
         } else {
             AppUtil.openNonInternetActivity(ReleaseDateActivity.this, getResources().getString(R.string.something_went_wrong));
             finish();
         }
     }
+
+
 }

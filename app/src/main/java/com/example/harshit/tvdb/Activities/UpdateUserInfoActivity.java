@@ -74,6 +74,7 @@ public class UpdateUserInfoActivity extends AppCompatActivity implements View.On
     private String display_name;
     private String image_url;
     private ImageView img_cam;
+    private String edit_email;
 
 
     @Override
@@ -244,6 +245,7 @@ public class UpdateUserInfoActivity extends AppCompatActivity implements View.On
                 break;
 
             case R.id.btn_addUserInfo:
+                AppUtil.hideKeypad(this);
                 if (getDataOfLayout()) {
                     // here we have to stre boolean in shared prefernce
                     storeImage();
@@ -258,6 +260,7 @@ public class UpdateUserInfoActivity extends AppCompatActivity implements View.On
         age = et_age.getText().toString().trim();
         fname = et_fname.getText().toString().trim();
         lname = et_lname.getText().toString().trim();
+        edit_email = et_email.getText().toString().trim();
         if (TextUtils.isEmpty(fname)) {
             et_fname.setError("Please enter First Name");
 
@@ -273,6 +276,9 @@ public class UpdateUserInfoActivity extends AppCompatActivity implements View.On
         } else if (TextUtils.isEmpty(age)) {
             et_age.setError("Please enter age");
 
+            return false;
+        } else if (TextUtils.isEmpty(edit_email) && AppUtil.emailValidator(edit_email)) {
+            et_email.setError("Please enter valid email format");
             return false;
         } else {
 
@@ -298,12 +304,69 @@ public class UpdateUserInfoActivity extends AppCompatActivity implements View.On
 
     private void storeImage() {
         //if there is a file to upload
-        if (arr_images != null && arr_images.size() > 0) {
+
+        // if there is url from facebook or google
+        if (image_url != null) {
+            final ProgressDialog progressDialog = new ProgressDialog(this);
+//            progressDialog.setTitle("Uploading Information");
+            progressDialog.setCancelable(false);
+            progressDialog.show();
+
+
+            StorageReference riversRef = storageRef.child(user_token).child("Profile");
+
+            riversRef.putFile(Uri.parse(image_url))
+                    .addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
+                        @Override
+                        public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
+                            //if the upload is successfull
+                            //hiding the progress dialog
+                            //and displaying a success toast
+
+
+                            AppUtil.showToast(getApplicationContext(), "Info has been successfully submitted");
+                            Preference.writeBoolean(getApplicationContext(), Preference.is_User_Info_saved, true);
+                            if (coming_from.equalsIgnoreCase("login")) {
+                                Intent intent = new Intent(getApplicationContext(), DashBoardActivity.class);
+                                intent.putExtra("USER_TOKEN", user_token);
+                                startActivity(intent);
+                                finish();
+                            } else {
+                                finishAffinity();
+
+                            }
+                        }
+                    })
+                    .addOnFailureListener(new OnFailureListener() {
+                        @Override
+                        public void onFailure(@NonNull Exception exception) {
+                            //if the upload is not successfull
+                            //hiding the progress dialog
+                            progressDialog.dismiss();
+                            //and displaying error message
+                            Toast.makeText(getApplicationContext(), exception.getMessage(), Toast.LENGTH_LONG).show();
+                            finish();
+                        }
+                    })
+                    .addOnProgressListener(new OnProgressListener<UploadTask.TaskSnapshot>() {
+                        @Override
+                        public void onProgress(UploadTask.TaskSnapshot taskSnapshot) {
+                            //calculating progress percentage
+                            double progress = (100.0 * taskSnapshot.getBytesTransferred()) / taskSnapshot.getTotalByteCount();
+                            //displaying percentage in progress dialog
+                            progressDialog.setMessage("Uploading in progress..." + ((int) progress) + "%...");
+                        }
+                    });
+
+
+        } else if (arr_images != null && arr_images.size() > 0) {
             //displaying a progress dialog while upload is going on
             final ProgressDialog progressDialog = new ProgressDialog(this);
 //            progressDialog.setTitle("Uploading Information");
             progressDialog.setCancelable(false);
             progressDialog.show();
+
+
             int arrSize = arr_images.size();
             for (int i = 0; i < arrSize; i++) {
                 final Bean_Upload bean_upload = arr_images.get(i);
