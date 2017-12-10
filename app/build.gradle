@@ -2,7 +2,7 @@ apply plugin: 'com.android.application'
 
 android {
     compileSdkVersion 26
-    buildToolsVersion "26.0.2"
+    buildToolsVersion '27.0.1'
     defaultConfig {
         applicationId "com.example.harshit.tvdb"
         minSdkVersion 16
@@ -24,6 +24,7 @@ dependencies {
     androidTestCompile('com.android.support.test.espresso:espresso-core:2.2.2', {
         exclude group: 'com.android.support', module: 'support-annotations'
     })
+
     // these are the retrofit library and gson lib
     // the recylerview cardview library
     compile 'com.android.support:appcompat-v7:26.1.0'
@@ -41,13 +42,13 @@ dependencies {
     //this is for firebase auth
     compile 'com.google.firebase:firebase-auth:11.6.0'
     compile 'com.google.firebase:firebase-storage:11.6.0'
-
     compile 'com.google.firebase:firebase-database:11.6.0'
     compile 'com.google.android.gms:play-services-auth:11.6.0'
     compile 'com.facebook.android:facebook-android-sdk:4.6.0'
 
-    // this is used for the logs in http
+    compile 'de.hdodenhof:circleimageview:2.2.0'
 
+    // this is used for the logs in http
 }
 // Add to the bottom of the file
 apply plugin: 'com.google.gms.google-services'

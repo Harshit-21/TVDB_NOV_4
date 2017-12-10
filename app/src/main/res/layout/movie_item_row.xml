@@ -3,77 +3,86 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:id="@+id/card_Detail"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:layout_margin="@dimen/margin_10"
-    app:cardElevation="@dimen/elevation_10"
+    android:layout_height="@dimen/height_200"
+    android:background="@color/white"
     app:cardCornerRadius="10dp"
-    android:padding="@dimen/padding_20"
-  >
+    android:layout_margin="@dimen/margin_5"
+    app:cardElevation="@dimen/elevation_10">
 
 
-    <RelativeLayout
+    <FrameLayout
+        android:id="@+id/fl_detail"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:background="@drawable/round_corner">
+        android:layout_height="match_parent">
 
         <ImageView
             android:id="@+id/img_cover"
             android:layout_width="match_parent"
-            android:layout_height="@dimen/height_100"
-android:scaleType="fitXY"
+            android:layout_height="match_parent"
             android:alpha=".4"
-            />
+            android:scaleType="fitXY"
+          />
 
-        <FrameLayout
+    </FrameLayout>
+
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+       >
+
+
+        <RelativeLayout
+            android:id="@+id/rl_desc"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_above="@+id/ll_bottom">
+            android:layout_height="@dimen/height_150"
+            android:layout_alignParentTop="true"
 
-            <RelativeLayout
+           >
+
+
+            <ImageView
+                android:id="@+id/img_title"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentLeft="true"
+                android:layout_centerVertical="true"
+                android:layout_margin="@dimen/margin_5" />
+
+            <TextView
+                android:id="@+id/tv_Name"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_margin="@dimen/margin_5"
+                android:text="bffhfhfhjfhjfhfhjf"
+                android:layout_centerVertical="true"
+                android:layout_toRightOf="@+id/img_title"
+                android:textColor="@color/black"
+                android:textSize="@dimen/text_20"
+                android:textStyle="bold" />
+
+
+            <TextView
+                android:id="@+id/tv_shortDesc"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content">
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/tv_Name"
+                android:layout_margin="@dimen/margin_5"
+                android:layout_toRightOf="@+id/img_title"
+                android:ellipsize="end"
+                android:maxLines="3"
+                android:textColor="@color/black"
+                android:textStyle="italic" />
+        </RelativeLayout>
 
-                <ImageView
-                    android:id="@+id/img_title"
-                    android:layout_width="80dp"
-                    android:layout_height="80dp"
-                    android:layout_alignParentLeft="true"
-                   android:layout_marginLeft="@dimen/margin_3"
-                   />
-
-                <TextView
-                    android:id="@+id/tv_Name"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_toRightOf="@+id/img_title"
-                    android:textColor="@color/black"
-                    android:textSize="@dimen/text_20"
-                    android:text="fhdfjhdfhjdfhjdhdhj"
-                    android:textStyle="bold" />
-
-
-                <TextView
-                    android:id="@+id/tv_shortDesc"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_below="@+id/tv_Name"
-                    android:layout_toRightOf="@+id/img_title"
-                    android:maxLines="2"
-                    android:ellipsize="end"
-                    android:text="thid hfdfdhdfhdf fhdfhfdjdf dfhdfhfdhfdhdfhdfhdfdfj hfdhdfhdfhdfhdf hfdhfdhdf fddfhdfh"
-                    android:textColor="@color/black"
-                    android:textStyle="italic" />
-
-
-            </RelativeLayout>
-        </FrameLayout>
 
         <LinearLayout
             android:id="@+id/ll_bottom"
             android:layout_width="match_parent"
             android:layout_height="@dimen/height_50"
-            android:layout_below="@+id/img_cover"
-            android:background="#5a9387"
+            android:alpha=".5"
+            android:layout_alignParentBottom="true"
+            android:background="@color/colorRed"
             android:orientation="horizontal"
             android:weightSum="1">
 
@@ -92,6 +101,7 @@ android:scaleType="fitXY"
                 android:layout_height="match_parent"
                 android:layout_weight=".33"
                 android:gravity="center"
+
                 android:textColor="@color/white"
                 android:textStyle="bold|italic" />
 
@@ -101,6 +111,7 @@ android:scaleType="fitXY"
                 android:layout_height="match_parent"
                 android:layout_weight=".33"
                 android:gravity="center"
+
                 android:textColor="@color/white"
                 android:textStyle="bold|italic" />
 

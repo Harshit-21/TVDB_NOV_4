@@ -10,7 +10,8 @@
     <RelativeLayout
         android:id="@+id/rl_tvSlider"
         android:layout_width="match_parent"
-        android:layout_height="@dimen/height_100">
+        android:layout_height="@dimen/height_200"
+        android:layout_alignParentTop="true">
 
         <android.support.v4.view.ViewPager
             android:id="@+id/vp_slider"
@@ -42,39 +43,54 @@
         android:layout_above="@+id/ll_page"
         android:layout_below="@+id/rl_tvSlider"
         android:layout_marginBottom="@dimen/margin_5"
-        android:layout_marginTop="@dimen/margin_10"
-        android:visibility="gone" />
-
+        android:layout_marginTop="@dimen/margin_5"
+        android:visibility="gone"
+        />
 
     <LinearLayout
         android:id="@+id/ll_page"
-        android:layout_width="wrap_content"
+        android:layout_width="@dimen/width_200"
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
         android:layout_centerHorizontal="true"
-        android:background="@color/colorPrimary"
-        android:orientation="horizontal"
+        android:layout_margin="@dimen/margin_3"
         android:padding="@dimen/padding_5"
-        android:visibility="gone">
+        android:background="@drawable/card_gradient"
+        android:orientation="horizontal"
+        android:visibility="gone"
+        >
+
 
         <TextView
             android:id="@+id/tv_previousTv"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_weight=".5"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight=".48"
             android:gravity="center"
+            android:text="Previous"
+            android:textSize="@dimen/text_16"
             android:padding="@dimen/padding_5"
-            android:text="Previous" />
+            android:textStyle="bold|italic" />
+
+        <!--<view-->
+            <!--android:id="@+id/view"-->
+            <!--android:layout_width="1dp"-->
+            <!--android:layout_height="match_parent"-->
+            <!--android:layout_marginBottom="@dimen/margin_5"-->
+            <!--android:layout_marginTop="@dimen/margin_5"-->
+            <!--android:textColor="@color/black" />-->
+
 
         <TextView
             android:id="@+id/tv_nextTv"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_weight=".5"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight=".48"
             android:gravity="center"
+            android:text="Next"
+            android:textSize="@dimen/text_16"
             android:padding="@dimen/padding_5"
-
-            android:text="Next" />
+            android:textStyle="bold|italic" />
 
 
     </LinearLayout>

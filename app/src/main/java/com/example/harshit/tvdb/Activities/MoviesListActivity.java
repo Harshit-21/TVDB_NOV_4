@@ -13,6 +13,7 @@ import android.support.v7.widget.RecyclerView;
 import android.text.Html;
 import android.text.TextUtils;
 import android.util.Log;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.LinearLayout;
 import android.widget.ProgressBar;
@@ -115,6 +116,20 @@ public class MoviesListActivity extends AppCompatActivity implements RecylerClic
             AppUtil.openNonInternetActivity(this, getResources().getString(R.string.no_internet));
             finish();
         }
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+
+        switch (item.getItemId()) {
+            case android.R.id.home:
+                super.onBackPressed();
+                return true;
+            default:
+                return super.onOptionsItemSelected(item);
+        }
+
+
     }
 
     private void handleGenreData(ArrayList<Bean_Genre> genrelist) {
@@ -316,6 +331,8 @@ public class MoviesListActivity extends AppCompatActivity implements RecylerClic
             recyler_moviegenre.setLayoutManager(mLayoutManager);
             recyler_moviegenre.setItemAnimator(new DefaultItemAnimator());
             recyler_moviegenre.setAdapter(movieAdapter);
+            handlePages(page_no);
+
         } else {
             progress_moviegenre.setVisibility(View.GONE);
             AppUtil.openNonInternetActivity(this, getResources().getString(R.string.something_went_wrong));

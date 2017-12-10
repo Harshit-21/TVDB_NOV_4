@@ -63,6 +63,7 @@ public class GenreAdapter extends RecyclerView.Adapter<GenreAdapter.MyViewHolder
             super(view);
             tv_genreName = (TextView) view.findViewById(R.id.tv_genreName);
             card_genre = (CardView) view.findViewById(R.id.card_genre);
+            card_genre.setBackground(context.getResources().getDrawable(R.drawable.card_gradient));
 
         }
     }

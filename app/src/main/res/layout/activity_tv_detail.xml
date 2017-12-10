@@ -1,288 +1,348 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.v7.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/card_TvDetails"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:layout_margin="@dimen/margin_10"
-    android:elevation="@dimen/elevation_10"
-    app:cardCornerRadius="20dp"
-    tools:context="com.example.harshit.tvdb.Activities.MovieDetailActivity">
+    android:background="@drawable/login_bg">
 
-    <ScrollView
+    <android.support.v7.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        xmlns:card_view="http://schemas.android.com/apk/res-auto"
+        android:id="@+id/card_TvDetails"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="match_parent"
+        android:layout_gravity="center"
+        android:layout_margin="@dimen/margin_10"
+        android:layout_marginTop="3dp"
+        android:elevation="@dimen/elevation_10"
+        app:cardBackgroundColor="@android:color/transparent"
+        card_view:cardCornerRadius="15dp"
+        card_view:cardPreventCornerOverlap="false"
+        card_view:cardUseCompatPadding="true"
+        tools:context="com.example.harshit.tvdb.Activities.MovieDetailActivity">
 
-        <RelativeLayout
+        <android.support.v4.widget.NestedScrollView
             android:layout_width="match_parent"
-            android:layout_height="wrap_content">
+            android:layout_height="wrap_content"
+            >
 
-<ImageView
-    android:id="@+id/img_backdropImage"
-    android:layout_width="match_parent"
-    android:layout_height="@dimen/height_100"
-    android:scaleType="fitXY"
-    android:layout_alignParentTop="true"
-    android:src="@drawable/popular_ico"/>
-
-
-            <ProgressBar
-                android:id="@+id/progress_tvDetail"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_centerInParent="true"/>
-
-            <LinearLayout
-                android:id="@+id/ll_nameTV"
+            <RelativeLayout
                 android:layout_width="match_parent"
-                android:layout_height="@dimen/height_50"
-                android:layout_marginTop="@dimen/margin_3"
-                android:layout_below="@+id/img_backdropImage"
-                android:orientation="horizontal"
-                android:weightSum="1">
-
+                android:layout_height="wrap_content">
 
                 <ImageView
-                    android:id="@+id/img_posterimage"
-                    android:layout_width="0dp"
-                    android:layout_height="match_parent"
-                    android:layout_weight=".2" />
-
-                <TextView
-                    android:id="@+id/tv_titleTV"
-                    android:layout_width="0dp"
-                    android:layout_height="match_parent"
-                    android:layout_weight=".8"
-                    android:gravity="center"
-                    android:padding="@dimen/padding_10"
-                    android:text=""
-                    android:textSize="@dimen/text_18"
-                    android:textStyle="bold|italic" />
-            </LinearLayout>
-
-
-            <TextView
-                android:id="@+id/tv_DescTV"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_below="@+id/ll_nameTV"
-                android:textSize="@dimen/text_14"
-                android:textStyle="italic" />
-
-
-            <TableLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_below="@+id/tv_DescTV">
-
-                <TableRow
+                    android:id="@+id/img_backdropImage"
                     android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:padding="@dimen/padding_10">
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_weight="2"
-                        android:gravity="center"
-                        android:text="popularity" />
-
-                    <TextView
-                        android:id="@+id/tv_popularityTV"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_weight="2"
-                        android:gravity="center" />
+                    android:layout_height="@dimen/height_100"
+                    android:layout_alignParentTop="true"
+                    android:scaleType="fitXY"
+                    android:src="@drawable/popular_ico" />
 
 
-                </TableRow>
-
-                <TableRow
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:padding="@dimen/padding_10">
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_weight="2"
-                        android:gravity="center"
-                        android:text="Air date" />
-
-                    <TextView
-                        android:id="@+id/tv_AirdateTv"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_weight="2"
-                        android:gravity="center" />
-
-
-                </TableRow>
-
-                <TableRow
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:padding="@dimen/padding_10">
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_weight="2"
-                        android:gravity="center"
-                        android:text="status" />
-
-                    <TextView
-                        android:id="@+id/tv_statusTV"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_weight="2"
-                        android:gravity="center" />
-
-
-                </TableRow>
-
-                <TableRow
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:padding="@dimen/padding_10">
-
-                    <TextView
-                        android:id="@+id/textView2"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_weight="2"
-                        android:gravity="center"
-                        android:text="Vote Avg" />
-
-                    <TextView
-                        android:id="@+id/tv_voteavgTV"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_weight="2"
-                        android:gravity="center" />
-
-
-                </TableRow>
-
-                <TableRow
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:padding="@dimen/padding_10">
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_weight="2"
-                        android:gravity="center"
-                        android:text="No Of Seasons" />
-
-                    <TextView
-                        android:id="@+id/tv_seasonTV"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_weight="2"
-                        android:gravity="center" />
-
-
-                </TableRow>
-
-
-                <TableRow
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:padding="@dimen/padding_10">
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_weight="2"
-                        android:gravity="center"
-                        android:text="Original Language" />
-
-                    <TextView
-                        android:id="@+id/tv_languageTV"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_weight="2"
-                        android:gravity="center" />
-
-
-                </TableRow>
-
-
-                <TextView
-                    android:id="@+id/tv_VideosTV"
+                <ProgressBar
+                    android:id="@+id/progress_tvDetail"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_margin="@dimen/margin_5"
-                    android:layout_weight="2"
-                    android:drawableEnd="@drawable/ic_menu_manage"
-                    android:drawableRight="@drawable/ic_menu_manage"
-                    android:gravity="center"
-                    android:text="get youtube videos" />
+                    android:layout_centerInParent="true" />
+
+                <LinearLayout
+                    android:id="@+id/ll_nameTV"
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/height_50"
+                    android:layout_below="@+id/img_backdropImage"
+                    android:layout_marginTop="@dimen/margin_3"
+                    android:orientation="horizontal"
+                    android:weightSum="1">
+
+
+                    <ImageView
+                        android:id="@+id/img_posterimage"
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_weight=".2" />
+
+                    <TextView
+                        android:id="@+id/tv_titleTV"
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_weight=".8"
+                        android:gravity="center"
+                        android:padding="@dimen/padding_10"
+                        android:text=""
+                        android:textSize="@dimen/text_18"
+                        android:textStyle="bold|italic" />
+                </LinearLayout>
+
 
                 <TextView
-                    android:id="@+id/tv_recommendedTV"
-                    android:layout_width="wrap_content"
+                    android:id="@+id/tv_DescTV"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_margin="@dimen/margin_5"
-                    android:layout_weight="2"
-                    android:drawableEnd="@drawable/ic_menu_manage"
-                    android:drawableRight="@drawable/ic_menu_manage"
-                    android:gravity="center"
-                    android:text="get recommended TV Series " />
+                    android:layout_below="@+id/ll_nameTV"
+                    android:textSize="@dimen/text_14"
+                    android:textStyle="italic" />
 
-                <TextView
-                    android:id="@+id/tv_crewTV"
-                    android:layout_width="wrap_content"
+
+                <LinearLayout
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:layout_below="@+id/tv_DescTV"
                     android:layout_margin="@dimen/margin_5"
-                    android:layout_weight="2"
-                    android:drawableEnd="@drawable/ic_menu_manage"
-                    android:drawableRight="@drawable/ic_menu_manage"
-                    android:gravity="center"
-                    android:text="get cast n crew" />
+                    android:orientation="vertical">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:alpha=".5"
+                        android:background="#E6000000"
+                        android:orientation="horizontal"
+                        android:padding="@dimen/padding_15">
 
 
+                        <TextView
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight=".5"
+                            android:gravity="center"
+                            android:text="popularity"
+                            android:textColor="@color/white" />
 
-                <ExpandableListView
-                    android:id="@+id/expandable_production"
-                    android:layout_height="match_parent"
-                    android:layout_margin="@dimen/margin_5"
-                    android:gravity="center"
-                    android:divider="#f00"
-                    android:dividerHeight="1dp"
-                    android:layout_width="match_parent"/>
+                        <TextView
+                            android:id="@+id/tv_popularityTV"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight=".5"
+                            android:gravity="center"
+                            android:textColor="@color/white" />
 
-                <TextView
-                    android:id="@+id/tv_genreTV"
-                    android:layout_width="fill_parent"
-                    android:layout_height="fill_parent"
-                    android:layout_margin="@dimen/margin_5"
-                    android:layout_weight="2"
-                    android:drawableEnd="@drawable/ic_menu_manage"
-                    android:drawableRight="@drawable/ic_menu_manage"
-                    android:gravity="center"
-                    android:text="Genre List" />
+                    </LinearLayout>
 
-                <TextView
-                    android:id="@+id/tv_viewAllTV"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_margin="@dimen/margin_5"
-                    android:layout_weight="2"
-                    android:drawableEnd="@drawable/ic_menu_manage"
-                    android:drawableRight="@drawable/ic_menu_manage"
-                    android:gravity="center"
-                    android:text="View All Seasons and TV" />
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:alpha=".5"
+                        android:background="#E6000000"
+                        android:orientation="horizontal"
+                        android:padding="@dimen/padding_15">
 
 
-            </TableLayout>
+                        <TextView
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight=".5"
+                            android:gravity="center"
+                            android:text="Air date"
+
+                            android:textColor="@color/white" />
+
+                        <TextView
+                            android:id="@+id/tv_AirdateTv"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight=".5"
+                            android:gravity="center"
+
+                            android:textColor="@color/white" />
 
 
-        </RelativeLayout>
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:alpha=".5"
+                        android:background="#E6000000"
+                        android:orientation="horizontal"
+                        android:padding="@dimen/padding_15">
 
 
-    </ScrollView>
-</android.support.v7.widget.CardView>
+                        <TextView
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight=".5"
+                            android:gravity="center"
+                            android:text="status"
+                            android:textColor="@color/white" />
+
+                        <TextView
+                            android:id="@+id/tv_statusTV"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight=".5"
+                            android:gravity="center"
+                            android:textColor="@color/white" />
+
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:alpha=".5"
+                        android:background="#E6000000"
+                        android:orientation="horizontal"
+                        android:padding="@dimen/padding_15">
+
+
+                        <TextView
+                            android:id="@+id/textView2"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight=".5"
+                            android:gravity="center"
+                            android:text="Vote Avg"
+                            android:textColor="@color/white" />
+
+                        <TextView
+                            android:id="@+id/tv_voteavgTV"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight=".5"
+                            android:gravity="center"
+                            android:textColor="@color/white" />
+
+                    </LinearLayout>
+
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:alpha=".5"
+                        android:background="#E6000000"
+                        android:orientation="horizontal"
+                        android:padding="@dimen/padding_15">
+
+                        <TextView
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight=".5"
+                            android:gravity="center"
+                            android:text="No Of Seasons"
+                            android:textColor="@color/white" />
+
+                        <TextView
+                            android:id="@+id/tv_seasonTV"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight=".5"
+                            android:gravity="center"
+                            android:textColor="@color/white" />
+
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:alpha=".5"
+                        android:background="#E6000000"
+                        android:orientation="horizontal"
+                        android:padding="@dimen/padding_15">
+
+
+                        <TextView
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight=".5"
+                            android:gravity="center"
+
+                            android:text="Original Language"
+                            android:textColor="@color/white" />
+
+                        <TextView
+                            android:id="@+id/tv_languageTV"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight=".5"
+                            android:gravity="center"
+                            android:textColor="@color/white" />
+
+
+                    </LinearLayout>
+
+
+                    <TextView
+                        android:id="@+id/tv_VideosTV"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:alpha=".5"
+                        android:background="#E6000000"
+                        android:drawableEnd="@drawable/right_arrow_ico"
+                        android:drawableRight="@drawable/right_arrow_ico"
+                        android:gravity="center"
+                        android:padding="@dimen/padding_15"
+                        android:text="Get Youtube videos"
+                        android:textColor="@color/white" />
+
+                    <TextView
+                        android:id="@+id/tv_recommendedTV"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:alpha=".5"
+                        android:background="#E6000000"
+                        android:drawableEnd="@drawable/right_arrow_ico"
+                        android:drawableRight="@drawable/right_arrow_ico"
+                        android:gravity="center"
+                        android:padding="@dimen/padding_15"
+                        android:text="get recommended Tv "
+                        android:textColor="@color/white" />
+
+
+                    <TextView
+                        android:id="@+id/tv_crewTV"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:alpha=".5"
+                        android:background="#E6000000"
+                        android:drawableEnd="@drawable/right_arrow_ico"
+                        android:drawableRight="@drawable/right_arrow_ico"
+                        android:gravity="center"
+                        android:padding="@dimen/padding_15"
+                        android:text="get cast n crew"
+                        android:textColor="@color/white" />
+
+                    <ExpandableListView
+                        android:id="@+id/expandable_production"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_margin="@dimen/margin_5"
+                        android:divider="#f00"
+                        android:focusable="false"
+                        android:focusableInTouchMode="false"
+                        android:dividerHeight="1dp"
+                        android:gravity="center" />
+
+
+                    <TextView
+                        android:id="@+id/tv_genreTV"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:alpha=".5"
+                        android:background="#E6000000"
+                        android:drawableEnd="@drawable/right_arrow_ico"
+                        android:drawableRight="@drawable/right_arrow_ico"
+                        android:padding="@dimen/padding_15"
+                        android:textColor="@color/white"
+                       />
+
+                    <TextView
+                        android:id="@+id/tv_viewAllTV"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:alpha=".5"
+                        android:background="#E6000000"
+                        android:drawableEnd="@drawable/right_arrow_ico"
+                        android:drawableRight="@drawable/right_arrow_ico"
+                        android:gravity="center"
+                        android:padding="@dimen/padding_15"
+                        android:text="View All Seasons and TV"
+
+                        android:textColor="@color/white" />
+
+
+                </LinearLayout>
+
+            </RelativeLayout>
+
+
+        </android.support.v4.widget.NestedScrollView>
+    </android.support.v7.widget.CardView>
+</RelativeLayout>

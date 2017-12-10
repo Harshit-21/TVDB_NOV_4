@@ -18,6 +18,4 @@ public class MyApplication extends Application {
         ApiInterface apiService = ApiClient.getClient().create(ApiInterface.class);
         return apiService;
     }
-
-
 }

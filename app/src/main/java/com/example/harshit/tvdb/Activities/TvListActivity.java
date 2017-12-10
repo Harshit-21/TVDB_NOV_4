@@ -12,6 +12,7 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.text.Html;
 import android.util.Log;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.LinearLayout;
 import android.widget.ProgressBar;
@@ -130,6 +131,19 @@ public class TvListActivity extends AppCompatActivity implements View.OnClickLis
         progress_tv = findViewById(R.id.progress_tv);
     }
 
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+
+        switch (item.getItemId()) {
+            case android.R.id.home:
+                super.onBackPressed();
+                return true;
+            default:
+                return super.onOptionsItemSelected(item);
+        }
+
+
+    }
 
     private void setSliderAdapter() {
 
@@ -246,6 +260,7 @@ public class TvListActivity extends AppCompatActivity implements View.OnClickLis
             recyler_tv.setLayoutManager(mLayoutManager);
             recyler_tv.setItemAnimator(new DefaultItemAnimator());
             recyler_tv.setAdapter(tvAdapter);
+            handlePages(page_no);
 
         } else {
             AppUtil.openNonInternetActivity(TvListActivity.this, getResources().getString(R.string.something_went_wrong));
@@ -282,9 +297,11 @@ public class TvListActivity extends AppCompatActivity implements View.OnClickLis
             tv_previous.setVisibility(View.GONE);
         } else if (page_no > total_pages) {
             tv_next.setVisibility(View.GONE);
+
         } else {
             tv_next.setVisibility(View.VISIBLE);
             tv_previous.setVisibility(View.VISIBLE);
+
         }
     }
 

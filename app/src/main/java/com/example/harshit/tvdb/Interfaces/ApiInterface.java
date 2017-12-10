@@ -11,6 +11,7 @@ import com.example.harshit.tvdb.Pojo.Bean_TranslationsResponse;
 import com.example.harshit.tvdb.Pojo.Bean_TvDetails;
 import com.example.harshit.tvdb.Pojo.Bean_TvResponse;
 import com.example.harshit.tvdb.Pojo.Bean_TvSeasonResponse;
+import com.example.harshit.tvdb.Pojo.Bean_YoutubeResponse;
 
 import retrofit2.Call;
 import retrofit2.http.GET;
@@ -52,7 +53,7 @@ public interface ApiInterface {
 
     //            *******************to get the videos link to play on youtube**************
     @GET("movie/{movie_id}/videos")
-    Call<Bean_MovieResponse> getVideos(@Path("movie_id") String movie_id, @Query("api_key") String apiKey, @Query("language") String language);
+    Call<Bean_YoutubeResponse> getVideos(@Path("movie_id") int movie_id, @Query("api_key") String apiKey, @Query("language") String language);
 
 
 //    **********to get the transalations means to get the iso n all stuff********************
@@ -103,6 +104,11 @@ public interface ApiInterface {
 
     @GET("tv/airing_today")
     Call<Bean_TvResponse> getAiringToday(@Query("api_key") String apiKey, @Query("language") String language,@Query("page") int page);
+
+    // this is to get the tv videos
+    @GET("tv/{tv_id}/videos")
+    Call<Bean_YoutubeResponse> getTvVideos(@Path("tv_id") int tv_id, @Query("api_key") String apiKey, @Query("language") String language);
+
 
 
 

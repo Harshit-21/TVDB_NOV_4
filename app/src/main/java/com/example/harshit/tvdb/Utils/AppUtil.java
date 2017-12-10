@@ -1,22 +1,27 @@
 package com.example.harshit.tvdb.Utils;
 
 import android.app.Activity;
+import android.app.ActivityOptions;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapShader;
 import android.graphics.Canvas;
 import android.graphics.Color;
+import android.graphics.Matrix;
 import android.graphics.Paint;
 import android.graphics.Shader;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
+import android.os.Build;
+import android.support.annotation.RequiresApi;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.util.DisplayMetrics;
 import android.widget.Toast;
 
 import com.example.harshit.tvdb.Activities.NonInternetorErrorActivity;
+import com.example.harshit.tvdb.Activities.SplashActivity;
 
 import java.io.File;
 import java.math.BigDecimal;
@@ -56,8 +61,14 @@ public class AppUtil {
     public static void openNonInternetActivity(Context context, String tag) {
         Intent noInternetIntent = new Intent(context, NonInternetorErrorActivity.class);
         noInternetIntent.putExtra("TAG", tag);
-        context.startActivity(noInternetIntent);
+        // Check if we're running on Android 5.0 or higher
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+            // Call some material design APIs here
+            context.startActivity(noInternetIntent, ActivityOptions.makeSceneTransitionAnimation((Activity) context).toBundle());
 
+        } else {
+            context.startActivity(noInternetIntent);
+        }
     }
 
 
@@ -162,6 +173,24 @@ public class AppUtil {
         } catch (Exception e) {
             e.printStackTrace();
         }
+    }
+
+
+    public static Bitmap getResizedBitmap(Bitmap bm, int newWidth, int newHeight) {
+        int width = bm.getWidth();
+        int height = bm.getHeight();
+        float scaleWidth = ((float) newWidth) / width;
+        float scaleHeight = ((float) newHeight) / height;
+        // CREATE A MATRIX FOR THE MANIPULATION
+        Matrix matrix = new Matrix();
+        // RESIZE THE BIT MAP
+        matrix.postScale(scaleWidth, scaleHeight);
+
+        // "RECREATE" THE NEW BITMAP
+        Bitmap resizedBitmap = Bitmap.createBitmap(
+                bm, 0, 0, width, height, matrix, false);
+        bm.recycle();
+        return resizedBitmap;
     }
 
 

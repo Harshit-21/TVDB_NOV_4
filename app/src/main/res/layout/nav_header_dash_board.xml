@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/ll_nav"
     android:layout_width="match_parent"
     android:layout_height="@dimen/nav_header_height"
     android:background="@drawable/side_nav_bar"
@@ -10,32 +11,36 @@
     android:paddingLeft="@dimen/activity_horizontal_margin"
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin"
-    android:theme="@style/ThemeOverlay.AppCompat.Dark">
+   >
+
+    <ProgressBar
+        android:id="@+id/progress_userDashBoard"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerInParent="true"/>
 
 
-    <!--<FrameLayout-->
-        <!--android:layout_width="50dp"-->
-        <!--android:layout_height="50dp"-->
-        <!--android:layout_gravity="left"-->
-        <!--android:background="@drawable/circle">-->
 
-        <ImageView
-            android:id="@+id/user_image"
-            android:layout_width="50dp"
-            android:layout_height="50dp"
-            android:padding="@dimen/padding_10"
-            android:background="@drawable/circle"
-            android:scaleType="fitXY"
-        />
+    <ImageView
+        android:id="@+id/edit_user"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentTop="true"
+        android:padding="@dimen/padding_5"
+        android:layout_marginTop="@dimen/margin_10"
+        android:src="@drawable/edit"
+       />
 
-        <!--<ImageView-->
-            <!--android:layout_width="50dp"-->
-            <!--android:layout_height="50dp"-->
-            <!--android:scaleType="fitXY"-->
-            <!--android:src="@drawable/userimage_bg" />-->
+    <de.hdodenhof.circleimageview.CircleImageView
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        android:id="@+id/user_image"
+        android:layout_width="@dimen/width_80"
+        android:layout_height="@dimen/height_80"
+        android:layout_alignParentTop="true"
+        app:civ_border_color="@color/white"
+        app:civ_border_width="1dp" />
 
-
-    <!--</FrameLayout>-->
 
 
     <TextView
@@ -44,6 +49,7 @@
         android:layout_height="wrap_content"
         android:paddingTop="@dimen/nav_header_vertical_spacing"
         android:text=""
+        android:layout_below="@+id/user_image"
         android:textAppearance="@style/TextAppearance.AppCompat.Body1" />
 
-</LinearLayout>
+</RelativeLayout>

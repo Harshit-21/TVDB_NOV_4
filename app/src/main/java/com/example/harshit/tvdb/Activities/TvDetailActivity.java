@@ -9,6 +9,7 @@ import android.os.Bundle;
 import android.support.v7.widget.CardView;
 import android.text.TextUtils;
 import android.util.Log;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.animation.AccelerateDecelerateInterpolator;
 import android.view.animation.BounceInterpolator;
@@ -17,6 +18,7 @@ import android.widget.ExpandableListView;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.harshit.tvdb.Adapters.Production_Adapter;
 import com.example.harshit.tvdb.Application.MyApplication;
@@ -113,6 +115,19 @@ public class TvDetailActivity extends AppCompatActivity implements View.OnClickL
         }
     }
 
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+
+        switch (item.getItemId()) {
+            case android.R.id.home:
+                super.onBackPressed();
+                return true;
+            default:
+                return super.onOptionsItemSelected(item);
+        }
+
+
+    }
 
     private void handleTvDetailData(Bean_TvDetails bean_tvDetails) {
         if (bean_tvDetails != null) {
@@ -147,10 +162,11 @@ public class TvDetailActivity extends AppCompatActivity implements View.OnClickL
             ArrayList<Bean_Genre> arr_tvGenre = bean_tvDetails.getGenres();
             if (arr_tvGenre != null) {
                 for (Bean_Genre bean_genre : arr_tvGenre) {
-
-                    tv_genreTV.setText(bean_genre.getName() + ",");
-
+                    tv_genreTV.setText(tv_genreTV.getText()+bean_genre.getName() + ",");
                 }
+
+                 tv_genreTV.setText(tv_genreTV.getText().toString().substring(0, tv_genreTV.getText().length() - 1));
+
 
             } else {
                 tv_genreTV.setVisibility(View.GONE);
@@ -164,47 +180,48 @@ public class TvDetailActivity extends AppCompatActivity implements View.OnClickL
                 final HashMap<String, ArrayList<Bean_Production>> hashmap_prod = new HashMap<>();
 
 
-//               for(int i=0;i<arr_tvGenre.size();i++){
-//                    hashmap_prod.put(list_data_Header.get(0), arr_tvProduction.get(i));
-//
-//                }
+               for(int i=0;i<arr_tvGenre.size();i++){
+                    hashmap_prod.put(list_data_Header.get(0), arr_tvProduction);
+
+                }
 
                 production_adapter = new Production_Adapter(this, list_data_Header, hashmap_prod);
                 // setting list adapter
                 expandable_production.setAdapter(production_adapter);
-//                // Listview Group click listener
-//                expandable_production.setOnGroupClickListener(new ExpandableListView.OnGroupClickListener() {
-//
-//                    @Override
-//                    public boolean onGroupClick(ExpandableListView parent, View v,
-//                                                int groupPosition, long id) {
-//                        // Toast.makeText(getApplicationContext(),
-//                        // "Group Clicked " + listDataHeader.get(groupPosition),
-//                        // Toast.LENGTH_SHORT).show();
-//                        return false;
-//                    }
-//                });
-//
-//                // Listview Group expanded listener
-//                expandable_production.setOnGroupExpandListener(new ExpandableListView.OnGroupExpandListener() {
-//
-//                    @Override
-//                    public void onGroupExpand(int groupPosition) {
-//                        Toast.makeText(getApplicationContext(), list_data_Header.get(groupPosition) + " Expanded", Toast.LENGTH_SHORT).show();
-//                    }
-//                });
-//
-//                // Listview Group collasped listener
-//                expandable_production.setOnGroupCollapseListener(new ExpandableListView.OnGroupCollapseListener() {
-//
-//                    @Override
-//                    public void onGroupCollapse(int groupPosition) {
-//                        Toast.makeText(getApplicationContext(),
-//                                list_data_Header.get(groupPosition) + " Collapsed",
-//                                Toast.LENGTH_SHORT).show();
-//
-//                    }
-//                });
+                // Listview Group click listener
+                expandable_production.setOnGroupClickListener(new ExpandableListView.OnGroupClickListener() {
+
+                    @Override
+                    public boolean onGroupClick(ExpandableListView parent, View v,
+                                                int groupPosition, long id) {
+                        parent.expandGroup(groupPosition);
+                         Toast.makeText(getApplicationContext(),
+                         "Group Clicked " + list_data_Header.get(groupPosition),
+                         Toast.LENGTH_SHORT).show();
+                        return false;
+                    }
+                });
+
+                // Listview Group expanded listener
+                expandable_production.setOnGroupExpandListener(new ExpandableListView.OnGroupExpandListener() {
+
+                    @Override
+                    public void onGroupExpand(int groupPosition) {
+                        Toast.makeText(getApplicationContext(), list_data_Header.get(groupPosition) + " Expanded", Toast.LENGTH_SHORT).show();
+                    }
+                });
+
+                // Listview Group collasped listener
+                expandable_production.setOnGroupCollapseListener(new ExpandableListView.OnGroupCollapseListener() {
+
+                    @Override
+                    public void onGroupCollapse(int groupPosition) {
+                        Toast.makeText(getApplicationContext(),
+                                list_data_Header.get(groupPosition) + " Collapsed",
+                                Toast.LENGTH_SHORT).show();
+
+                    }
+                });
 //
 //                // Listview on child click listener
 //                expandable_production.setOnChildClickListener(new ExpandableListView.OnChildClickListener() {
@@ -239,7 +256,6 @@ public class TvDetailActivity extends AppCompatActivity implements View.OnClickL
         progress_tvDetail = findViewById(R.id.progress_tvDetail);
         img_backdropImage = findViewById(R.id.img_backdropImage);
         card_TvDetails = findViewById(R.id.card_TvDetails);
-
         tv_titleTV = findViewById(R.id.tv_titleTV);
         tv_DescTV = findViewById(R.id.tv_DescTV);
         tv_popularityTV = findViewById(R.id.tv_popularityTV);
@@ -281,10 +297,16 @@ public class TvDetailActivity extends AppCompatActivity implements View.OnClickL
                 openRecommendedTv();
                 break;
             case R.id.tv_VideosTV:
-                AppUtil.showToast(this, "Coming soon");
-
+                openTvVideoActivity();
                 break;
         }
+    }
+
+    private void openTvVideoActivity() {
+        Intent video_intent=new Intent(this, YoutubeActivity.class);
+        video_intent.putExtra("TV_ID",tv_id);
+        video_intent.putExtra("COMING_FROM","TV");
+        startActivity(video_intent);
     }
 
     private void openSeasonEpisodeActivity() {

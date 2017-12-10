@@ -2,19 +2,15 @@ package com.example.harshit.tvdb.Activities;
 
 import android.animation.ObjectAnimator;
 import android.animation.ValueAnimator;
-import android.content.ComponentName;
 import android.content.Intent;
-import android.content.ServiceConnection;
 import android.graphics.Color;
 import android.os.Handler;
-import android.os.IBinder;
 import android.support.annotation.NonNull;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.CardView;
-import android.support.v7.widget.RecyclerView;
 import android.text.Html;
 import android.text.TextUtils;
 import android.util.Log;
@@ -28,11 +24,8 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import com.example.harshit.tvdb.Adapters.SliderImageAdapter;
-import com.example.harshit.tvdb.Adapters.SliderPagerAdapter;
 import com.example.harshit.tvdb.Application.MyApplication;
 import com.example.harshit.tvdb.Fragments.AlternativeMovieFragment;
-import com.example.harshit.tvdb.Fragments.ReleaseDateFragment;
-import com.example.harshit.tvdb.Fragments.YoutubeFragment;
 import com.example.harshit.tvdb.Pojo.Bean_MovieDetails;
 import com.example.harshit.tvdb.Pojo.Bean_MovieImages;
 import com.example.harshit.tvdb.Pojo.Bean_Poster;
@@ -49,8 +42,6 @@ import java.util.TimerTask;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
-
-import static android.view.animation.Animation.INFINITE;
 
 public class MovieDetailActivity extends AppCompatActivity implements View.OnClickListener {
     Bean_MovieDetails bean_movieDetails;
@@ -95,7 +86,6 @@ public class MovieDetailActivity extends AppCompatActivity implements View.OnCli
     private void handleIsoView() {
         if (arr_translations != null) {
             // now the transaltions is visible
-
             tv_moviereleasedateiso.setVisibility(View.VISIBLE);
             tv_moviealternativeTitles.setVisibility(View.VISIBLE);
         } else {
@@ -312,6 +302,7 @@ public class MovieDetailActivity extends AppCompatActivity implements View.OnCli
             tv_movierevenue.setText(AppUtil.currencyFormatter(String.valueOf(bean_movieDetails.getRevenue())));
             // we have to convert the time in minutes
             tv_movieruntime.setText(AppUtil.getFormattedTime(bean_movieDetails.getRuntime()));
+
             Log.e("YPUTUBE", bean_movieDetails.getVideo() + "");
 
         } else {
@@ -357,7 +348,7 @@ public class MovieDetailActivity extends AppCompatActivity implements View.OnCli
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.tv_movieVideos:
-//                openVideoFragment();
+                openVideoActivity();
                 break;
             case R.id.tv_recommendedmovies:
                 openRecommendedMoviesActivity();
@@ -368,15 +359,27 @@ public class MovieDetailActivity extends AppCompatActivity implements View.OnCli
                 break;
             case R.id.tv_moviealternativeTitles:
                 openAlternativeMovieFragment();
-//                AppUtil.showToast(this, "coming soon");
 
                 break;
             case R.id.tv_moviereleasedateiso:
-                openReleaseDateFragment();
-//                AppUtil.showToast(this, "coming soon");
+                openReleaseDateActivity();
                 break;
         }
     }
+
+    private void openReleaseDateActivity() {
+        Intent release_intent=new Intent(this, ReleaseDateActivity.class);
+        release_intent.putExtra("MOVIE_ID",bean_movieDetails.getId().toString());
+        startActivity(release_intent);
+    }
+
+    private void openVideoActivity() {
+        Intent video_intent=new Intent(this, YoutubeActivity.class);
+        video_intent.putExtra("MOVIE_ID",bean_movieDetails.getId().toString());
+        video_intent.putExtra("COMING_FROM","MOVIE");
+        startActivity(video_intent);
+    }
+
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
 
@@ -391,30 +394,12 @@ public class MovieDetailActivity extends AppCompatActivity implements View.OnCli
 
     }
 
-    private void openReleaseDateFragment() {
 
-        Bundle bundle = new Bundle();
-        bundle.putString("MOVIE_ID", bean_movieDetails.getId().toString());
-        //set Fragmentclass Arguments
-
-        ReleaseDateFragment releaseDateFragment = new ReleaseDateFragment();
-        releaseDateFragment.setArguments(bundle);
-        FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
-        transaction.replace(R.id.fl_container, releaseDateFragment); // fragment container id in first parameter is the  container(Main layout id) of Activity
-        transaction.addToBackStack(null);  // this will manage backstack
-        transaction.commit();
-
-    }
 
     private void openAlternativeMovieFragment() {
-        Bundle bundle = new Bundle();
-        bundle.putString("MOVIE_ID", bean_movieDetails.getId().toString());
-        AlternativeMovieFragment alternativeMovieFragment = new AlternativeMovieFragment();
-        alternativeMovieFragment.setArguments(bundle);
-        FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
-        transaction.replace(R.id.fl_container, alternativeMovieFragment); // fragment container id in first parameter is the  container(Main layout id) of Activity
-        transaction.addToBackStack(null);  // this will manage backstack
-        transaction.commit();
+        Intent release_intent=new Intent(this, AlternativeTitleActivity.class);
+        release_intent.putExtra("MOVIE_ID",bean_movieDetails.getId().toString());
+        startActivity(release_intent);
     }
 
 

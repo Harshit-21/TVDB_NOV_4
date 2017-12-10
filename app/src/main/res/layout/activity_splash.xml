@@ -20,7 +20,4 @@
         android:textStyle="italic|bold"
         android:textColor="@color/white"/>
 
-
-
-
 </RelativeLayout>

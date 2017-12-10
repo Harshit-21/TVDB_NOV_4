@@ -1,9 +1,11 @@
 package com.example.harshit.tvdb.Activities;
 
+import android.content.ClipData;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Color;
+import android.graphics.drawable.BitmapDrawable;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.v4.view.ViewPager;
@@ -19,22 +21,29 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ProgressBar;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.harshit.tvdb.Adapters.SliderPagerAdapter;
 import com.example.harshit.tvdb.Interfaces.SliderClick;
 import com.example.harshit.tvdb.Pojo.Bean_SliderImages;
+import com.example.harshit.tvdb.Pojo.Bean_Upload;
 import com.example.harshit.tvdb.Pojo.Bean_UserInfo;
 import com.example.harshit.tvdb.R;
 import com.example.harshit.tvdb.Utils.AppUtil;
 import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.GenericTypeIndicator;
 import com.google.firebase.database.ValueEventListener;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
@@ -48,6 +57,8 @@ public class DashBoardActivity extends AppCompatActivity implements NavigationVi
     private NavigationView navigationView;
     private DrawerLayout drawer;
     private Toolbar toolbar;
+    private RelativeLayout ll_nav;
+    private ProgressBar progress_userDashBoard;
 
     private ViewPager vp_slider;
     private LinearLayout ll_dots;
@@ -64,8 +75,9 @@ public class DashBoardActivity extends AppCompatActivity implements NavigationVi
     private ProgressBar progress_userInfo;
     private FirebaseStorage storage;
     private StorageReference storageRef;
-    final long ONE_MEGABYTE = 1024 * 1024 *5;
-
+    final long ONE_MEGABYTE = 1024 * 1024 * 5;
+    private ArrayList<Bean_Upload> downloadList;
+    private ImageView edit_user;
 
 
     @Override
@@ -75,8 +87,8 @@ public class DashBoardActivity extends AppCompatActivity implements NavigationVi
         getDataFromBundle();
         initViews();
         mDatabase = FirebaseDatabase.getInstance().getReference("USER");
-         storage = FirebaseStorage.getInstance();
-         storageRef = storage.getReferenceFromUrl(getString(R.string.firebase_storage));
+        storage = FirebaseStorage.getInstance();
+        storageRef = storage.getReferenceFromUrl(getString(R.string.firebase_storage));
         setSupportActionBar(toolbar);
         setDrawer();
         setListners();
@@ -108,9 +120,14 @@ public class DashBoardActivity extends AppCompatActivity implements NavigationVi
                 @Override
                 public void onDataChange(DataSnapshot dataSnapshot) {
                     // this is to get the arraylisst
-//                GenericTypeIndicator<ArrayList<Item>> t = new GenericTypeIndicator<ArrayList<Item>>() {};
-//                ArrayList<Item> yourStringArray = snapshot.getValue(t);
-//                Toast.makeText(getContext(),yourStringArray.get(0).getName(),Toast.LENGTH_LONG).show();
+//                GenericTypeIndicator<ArrayList<Bean_Upload>> t = new GenericTypeIndicator<ArrayList<Bean_Upload>>() {};
+//                ArrayList<Bean_Upload> yourStringArray = dataSnapshot.getValue(t);
+
+//                    for (DataSnapshot postSnapshot : dataSnapshot.getChildren()) {
+//                        Bean_Upload upload = postSnapshot.getValue(Bean_Upload.class);
+//                        downloadList.add(upload);
+//                    }
+
                     Bean_UserInfo user = dataSnapshot.getValue(Bean_UserInfo.class);
                     // here we get the complete info of user
                     setValueOfuser(user);
@@ -141,13 +158,35 @@ public class DashBoardActivity extends AppCompatActivity implements NavigationVi
             tv_userEmail.setText(user.getEmail());
 // now we need to download from firebase storage
             //download file as a byte array
-            storageRef.child(user_token).getBytes(ONE_MEGABYTE).addOnSuccessListener(new OnSuccessListener<byte[]>() {
-                @Override
-                public void onSuccess(byte[] bytes) {
-                    Bitmap bitmap = BitmapFactory.decodeByteArray(bytes, 0, bytes.length);
-                    user_image.setImageBitmap(bitmap);
-                }
-            });
+            progress_userDashBoard.setVisibility(View.VISIBLE);
+            final String[] images_name = new String[]{"COVER", "Profile"};
+
+
+            for (int i = 0; i < images_name.length; i++) {
+
+                final int finalI = i;
+                storageRef.child(user_token + "/" + images_name[i]).getBytes(ONE_MEGABYTE).addOnSuccessListener(new OnSuccessListener<byte[]>() {
+                    @Override
+                    public void onSuccess(byte[] bytes) {
+//
+//                    GenericTypedicator<ArrayList<Bean_Upload>> t = new GenericTypeIndicator<ArrayList<Bean_Upload>>() {};
+//                ArrayList<Bean_Upload> yourStringArray = dataSnapshot.getValue(t);
+
+                        Bitmap bitmap = BitmapFactory.decodeByteArray(bytes, 0, bytes.length);
+
+                        if (images_name[finalI].equalsIgnoreCase("COVER")) {
+                            BitmapDrawable background = new BitmapDrawable(bitmap);
+                            ll_nav.setBackgroundDrawable(background);
+                        } else {
+                            user_image.setImageBitmap(bitmap);
+                        }
+//                    Bitmap bmImg = BitmapFactory.decodeStream(is);
+
+                    }
+                });
+            }
+            progress_userDashBoard.setVisibility(View.GONE);
+
         }
     }
 
@@ -263,7 +302,10 @@ public class DashBoardActivity extends AppCompatActivity implements NavigationVi
         View headerView = navigationView.getHeaderView(0);
         user_image = headerView.findViewById(R.id.user_image);
         username = headerView.findViewById(R.id.tv_userName);
+        ll_nav = headerView.findViewById(R.id.ll_nav);
+        edit_user = headerView.findViewById(R.id.edit_user);
 
+        progress_userDashBoard = headerView.findViewById(R.id.progress_userDashBoard);
 
     }
 
@@ -272,6 +314,7 @@ public class DashBoardActivity extends AppCompatActivity implements NavigationVi
         tv_viewMovies.setOnClickListener(this);
         tv_search.setOnClickListener(this);
         navigationView.setNavigationItemSelectedListener(this);
+        edit_user.setOnClickListener(this);
 
     }
 
@@ -342,8 +385,18 @@ public class DashBoardActivity extends AppCompatActivity implements NavigationVi
             case R.id.tv_search:
                 openSearchActivity();
                 break;
+            case R.id.edit_user:
+                openUpdateUserActivity();
+                break;
         }
 
+    }
+
+    private void openUpdateUserActivity() {
+        Intent search_intent = new Intent(this, UpdateUserInfoActivity.class);
+        search_intent.putExtra("COMING_FROM", "Dashboard");
+        search_intent.putExtra("USER_TOKEN",user_token);
+        startActivity(search_intent);
     }
 
     private void openSearchActivity() {

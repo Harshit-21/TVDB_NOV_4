@@ -2,30 +2,16 @@
 <transitionSet xmlns:android="http://schemas.android.com/apk/res/android"
     android:transitionOrdering="together">
 
+    <slide android:slideEdge="top" android:interpolator="@android:interpolator/decelerate_quad"/>
 
-    <!--<explode/>-->
-    <!--<slide/>-->
-    <!--<fade/>-->
-
-    <fade
-        android:fadingMode="fade_out"
-        android:duration="1000"/>
-    <changeBounds
-        android:duration="2000"
-        android:interpolator="@android:interpolator/anticipate_overshoot"/>
     <fade
         android:fadingMode="fade_in"
         android:duration="1000"/>
-    <!--&lt;!&ndash;<explode&ndash;&gt;-->
-        <!--&lt;!&ndash;android:interpolator="@android:interpolator/anticipate_overshoot"&ndash;&gt;-->
-        <!--&lt;!&ndash;/>&ndash;&gt;-->
-        <!--<slide android:slideEdge="top"-->
-            <!--android:interpolator="@android:interpolator/accelerate_quint"/>-->
-
-
-    <!--<fade android:interpolator="@android:interpolator/anticipate" />-->
-
-    <!--<fade>-->
-    <!--</fade>-->
+    <!--<changeBounds-->
+        <!--android:duration="2000"-->
+        <!--android:interpolator="@android:interpolator/anticipate_overshoot"/>-->
+    <!--<fade-->
+        <!--android:fadingMode="fade_in"-->
+        <!--android:duration="1000"/>-->
 
 </transitionSet>

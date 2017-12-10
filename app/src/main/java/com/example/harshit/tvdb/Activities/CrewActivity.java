@@ -7,6 +7,7 @@ import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.ProgressBar;
 
@@ -42,6 +43,8 @@ public class CrewActivity extends AppCompatActivity implements RecylerClickEvent
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_crew);
+        AppUtil.setActionBar(this);
+
         initViews();
         AppUtil.setActionBar(this);
         getDataFromBundle();
@@ -94,6 +97,21 @@ public class CrewActivity extends AppCompatActivity implements RecylerClickEvent
             AppUtil.openNonInternetActivity(this, getResources().getString(R.string.something_went_wrong));
             finish();
         }
+    }
+
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+
+        switch (item.getItemId()) {
+            case android.R.id.home:
+                super.onBackPressed();
+                return true;
+            default:
+                return super.onOptionsItemSelected(item);
+        }
+
+
     }
 
     private void handleData(ArrayList<Bean_CastnCrew> arr_castncrew) {

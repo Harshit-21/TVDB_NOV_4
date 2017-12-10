@@ -56,7 +56,6 @@ import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 
 public class LoginActivity extends AppCompatActivity implements View.OnClickListener, GoogleApiClient.OnConnectionFailedListener {
-    private TextInputLayout txt_email, txt_pwd;
     private EditText et_pwd, et_email;
     private Button btn_login, btn_register;
     private static final String TAG = "LOGIN_ACTIVITY";
@@ -178,8 +177,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
     }
 
     private void initViews() {
-        txt_email = findViewById(R.id.txt_email);
-        txt_pwd = findViewById(R.id.txt_pwd);
+
         et_pwd = findViewById(R.id.et_pwd);
         et_email = findViewById(R.id.et_email);
         btn_login = findViewById(R.id.btn_login);
@@ -229,11 +227,11 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
 
 
         if (TextUtils.isEmpty(email)) {
-            txt_email.setError("Please enter Email");
+            et_email.setError("Please enter Email");
             return false;
         }
         if (TextUtils.isEmpty(password)) {
-            txt_pwd.setError("Please enter Password");
+            et_pwd.setError("Please enter Password");
             return false;
         }
         return true;
@@ -249,6 +247,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
             //creating a new user
             firebaseAuth.createUserWithEmailAndPassword(email, password)
                     .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
+                        @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
                         @Override
                         public void onComplete(@NonNull Task<AuthResult> task) {
                             //checking if success
@@ -264,9 +263,12 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
                                 if (user != null) {
                                     Intent intent = new Intent(getApplicationContext(), UpdateUserInfoActivity.class);
                                     intent.putExtra("USER_TOKEN", user.getUid());
-                                    intent.putExtra("EMAIL", user.getEmail());
+                                    intent.putExtra("COMING_FROM", "Login");
 
-                                    startActivity(intent);
+                                    intent.putExtra("EMAIL", user.getEmail());
+                                    startActivity(intent, ActivityOptions.makeSceneTransitionAnimation(LoginActivity.this).toBundle());
+                                    finish();
+
                                 } else {
                                     AppUtil.openNonInternetActivity(LoginActivity.this, getResources().getString(R.string.something_went_wrong));
                                     finish();
@@ -335,6 +337,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
             final AuthCredential credential = GoogleAuthProvider.getCredential(acct.getIdToken(), null);
             firebaseAuth.signInWithCredential(credential)
                     .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
+                        @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
                         @Override
                         public void onComplete(@NonNull Task<AuthResult> task) {
                             Log.d(TAG, "signInWithCredential:onComplete:" + task.isSuccessful());
@@ -355,8 +358,13 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
                                     Intent intent = new Intent(getApplicationContext(), UpdateUserInfoActivity.class);
                                     intent.putExtra("USER_TOKEN", user.getUid());
                                     intent.putExtra("EMAIL", user.getEmail());
+                                    intent.putExtra("NAME", user.getDisplayName());
+                                    intent.putExtra("IMAGE", user.getPhotoUrl().toString());
+                                    intent.putExtra("COMING_FROM", "Login");
 
-                                    startActivity(intent);
+                                    startActivity(intent, ActivityOptions.makeSceneTransitionAnimation(LoginActivity.this).toBundle());
+                                    finish();
+
                                 } else {
                                     AppUtil.openNonInternetActivity(LoginActivity.this, getResources().getString(R.string.something_went_wrong));
                                     finish();
@@ -391,15 +399,18 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
 
                             if (!task.isSuccessful()) {
                                 Log.w(TAG, "signInWithCredential", task.getException());
-                                Toast.makeText(LoginActivity.this, "Authentication failed.",
-                                        Toast.LENGTH_SHORT).show();
+                                Toast.makeText(LoginActivity.this, "Authentication failed.", Toast.LENGTH_SHORT).show();
                             } else {
                                 FirebaseUser user = task.getResult().getUser();
                                 if (user != null) {
                                     Intent intent = new Intent(getApplicationContext(), UpdateUserInfoActivity.class);
                                     intent.putExtra("USER_TOKEN", user.getUid());
                                     intent.putExtra("EMAIL", user.getEmail());
-                                    startActivity(intent);
+                                    intent.putExtra("NAME", user.getDisplayName());
+                                    intent.putExtra("IMAGE", user.getPhotoUrl().toString());
+                                    intent.putExtra("COMING_FROM", "Login");
+                                    startActivity(intent, ActivityOptions.makeSceneTransitionAnimation(LoginActivity.this).toBundle());
+                                    finish();
                                 } else {
                                     AppUtil.openNonInternetActivity(LoginActivity.this, getResources().getString(R.string.something_went_wrong));
                                     finish();
@@ -440,8 +451,11 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
                                 Intent intent = new Intent(getApplicationContext(), UpdateUserInfoActivity.class);
                                 intent.putExtra("USER_TOKEN", user.getUid());
                                 intent.putExtra("EMAIL", user.getEmail());
+                                intent.putExtra("COMING_FROM", "Login");
 
                                 startActivity(intent, ActivityOptions.makeSceneTransitionAnimation(LoginActivity.this).toBundle());
+                                finish();
+
                             }
                         }
                     });

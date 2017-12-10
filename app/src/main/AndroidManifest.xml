@@ -11,8 +11,10 @@
         android:name=".Application.MyApplication"
         android:allowBackup="true"
         android:background="?attr/selectableItemBackgroundBorderless"
+        android:hardwareAccelerated="false"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
+        android:largeHeap="true"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
@@ -25,7 +27,6 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-
         <activity
             android:name=".Activities.MoviesListActivity"
             android:label="@string/movie_list" />
@@ -57,7 +58,8 @@
             android:label="@string/search" />
         <activity
             android:name=".Activities.UpdateUserInfoActivity"
-            android:label="@string/update_user" />
+            android:label="@string/update_user"
+            android:theme="@style/FullscreenTheme" />
         <activity
             android:name=".Activities.LoginActivity"
             android:theme="@style/FullscreenTheme" />
@@ -73,6 +75,9 @@
         <activity
             android:name=".Activities.DashBoardActivity"
             android:theme="@style/AppTheme.NoActionBar" />
+        <activity android:name=".Activities.YoutubeActivity" />
+        <activity android:name=".Activities.ReleaseDateActivity" />
+        <activity android:name=".Activities.AlternativeTitleActivity"></activity>
     </application>
 
 </manifest>

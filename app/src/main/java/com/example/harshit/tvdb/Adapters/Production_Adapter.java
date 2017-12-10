@@ -85,8 +85,7 @@ public class Production_Adapter extends BaseExpandableListAdapter {
                     .getSystemService(Context.LAYOUT_INFLATER_SERVICE);
             convertView = infalInflater.inflate(R.layout.group, null);
         }
-
-        TextView lblListHeader = (TextView) convertView.findViewById(R.id.tv_header);
+        TextView lblListHeader = convertView.findViewById(R.id.tv_header);
         lblListHeader.setTypeface(null, Typeface.BOLD);
         lblListHeader.setText(headerTitle);
 

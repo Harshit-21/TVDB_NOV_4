@@ -44,11 +44,12 @@ public class MovieListAdapter extends RecyclerView.Adapter<MovieListAdapter.MyVi
     public void onBindViewHolder(MovieListAdapter.MyViewHolder holder, int position) {
         final Bean_MovieDetails bean_movieDetails = movieList.get(position);
 
+
         // here we are loading the image i.e coover as well as profile pic
         if (bean_movieDetails.getPosterPath() != null)
-            Picasso.with(context).load(AppConstant.IMG_PATH+bean_movieDetails.getPosterPath()).error(context.getResources().getDrawable(R.drawable.something_went_wrong)).into(holder.img_title);
+            Picasso.with(context).load(AppConstant.IMG_PATH + bean_movieDetails.getPosterPath()).error(context.getResources().getDrawable(R.drawable.something_went_wrong)).into(holder.img_title);
         if (bean_movieDetails.getBackdropPath() != null)
-            Picasso.with(context).load(AppConstant.IMG_PATH+bean_movieDetails.getBackdropPath()).error(context.getResources().getDrawable(R.drawable.something_went_wrong)).into(holder.img_cover);
+            Picasso.with(context).load(AppConstant.IMG_PATH + bean_movieDetails.getBackdropPath()).error(context.getResources().getDrawable(R.drawable.something_went_wrong)).into(holder.img_cover);
 
         // here we get the textview and we have to put all the info into it
         holder.tv_Name.setText(bean_movieDetails.getOriginalTitle() != null ? bean_movieDetails.getOriginalTitle() : "");
@@ -80,15 +81,14 @@ public class MovieListAdapter extends RecyclerView.Adapter<MovieListAdapter.MyVi
 
         public MyViewHolder(View view) {
             super(view);
-            tv_Name = (TextView) view.findViewById(R.id.tv_Name);
-            tv_shortDesc = (TextView) view.findViewById(R.id.tv_shortDesc);
-            tv_releasedate = (TextView) view.findViewById(R.id.tv_releasedate);
-            tv_vote_average = (TextView) view.findViewById(R.id.tv_vote_average);
+            tv_Name = view.findViewById(R.id.tv_Name);
+            tv_shortDesc = view.findViewById(R.id.tv_shortDesc);
+            tv_releasedate = view.findViewById(R.id.tv_releasedate);
+            tv_vote_average = view.findViewById(R.id.tv_vote_average);
             tv_popularity = (TextView) view.findViewById(R.id.tv_popularity);
             img_title = (ImageView) view.findViewById(R.id.img_title);
             img_cover = (ImageView) view.findViewById(R.id.img_cover);
             card_Detail = (CardView) view.findViewById(R.id.card_Detail);
-
         }
     }
 
