@@ -6,6 +6,7 @@ android {
     defaultConfig {
         applicationId "com.example.harshit.tvdb"
         minSdkVersion 16
+        multiDexEnabled true
         targetSdkVersion 26
         versionCode 1
         versionName "1.0"
