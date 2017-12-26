@@ -62,7 +62,7 @@
             android:theme="@style/FullscreenTheme" />
         <activity
             android:name=".Activities.LoginActivity"
-            android:theme="@style/FullscreenTheme" />
+            android:theme="@style/AppTheme.NoActionBar" />
         //Reference your App ID string//
         <meta-data
             android:name="com.facebook.sdk.ApplicationId"

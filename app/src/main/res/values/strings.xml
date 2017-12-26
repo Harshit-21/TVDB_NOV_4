@@ -39,4 +39,9 @@
     <string name="firebase_storage">gs://tvdb-f388b.appspot.com/</string>
     <string name="watch_videos">View Videos</string>
     <string name="release_date">Release Dates</string>
+    <string name="register">Register</string>
+    <string name="login">Login</string>
+    <string name="password">Password</string>
+    <string name="email">Email</string>
+    <string name="welcome">Welcome To TVDB</string>
 </resources>

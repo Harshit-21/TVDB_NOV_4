@@ -49,6 +49,7 @@
     <dimen name="height_30">30dp</dimen>
     <dimen name="text_30">30sp</dimen>
     <dimen name="width_100">100dp</dimen>
+    <dimen name="text_40">40sp</dimen>
 
 
 </resources>
